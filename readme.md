@@ -4,7 +4,8 @@ Companies data display
 
 ## About
 
-(strongly suggest to click on link with ctrl because github doesn't allow target="_blank)
+(strongly suggest to click on link with ctrl because github doesn't allow target="_blank")
+
 Project's live is here: [companiesdatadisplay.netlify.com](https://companiesdatadisplay.netlify.com/)
 
 It takes a while for project to load beacuse of multiple fetches (I guess).

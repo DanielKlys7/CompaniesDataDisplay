@@ -18,7 +18,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 What things you need to install the software and how to install them
 
-1. ode.js
+1. node.js
 2. npm
 3. [parcel](https://parceljs.org/) - module bundler
 

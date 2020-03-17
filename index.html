@@ -5,24 +5,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <link rel="stylesheet" href="style.sass">
+  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 </head>
 
 <body>
-  <input type="text" id="filterInput">
-  <div id="btnsContainer"></div>
-  <table>
-    <thead>
-      <tr>
-        <td colspan="4">Companies</td>
-      </tr>
-    </thead>
+  <input type="text" id="filterInput" class="filterInput" placeholder="name to filter by">
+  <div id="btnsContainer" class="btnsContainer"></div>
+  <table id="table" class="table">
     <tbody id="tbody">
-      <tr>
-        <td>Id</td>
-        <td>name</td>
-        <td>city</td>
-        <td>income</td>
-      </tr>
+      
     </tbody>
   </table>
   <script src="index.js"></script>

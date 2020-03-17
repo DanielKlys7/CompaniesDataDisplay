@@ -1,3 +1,4 @@
+const table = document.querySelector('#table')
 const tbody = document.querySelector('#tbody')
 const filterInput = document.querySelector('#filterInput')
 const btnsContainer = document.querySelector('#btnsContainer')
@@ -68,7 +69,7 @@ const renderButtons = (array) => {
 const renderCompanies = (array) => {
   const itemsOfPage = array.slice((currentPage * amountOfItemsPerPage - amountOfItemsPerPage), (amountOfItemsPerPage * currentPage))
   const companiesIntoElements = itemsOfPage.map((company) => (
-    `<tr>
+    `<tr class="company" data-key=${company.id}>
       <td>${company.id}</td>
       <td>${company.name}</td>
       <td>${company.city}</td>
@@ -76,16 +77,45 @@ const renderCompanies = (array) => {
     </tr>`
     )).join('')
   tbody.innerHTML = companiesIntoElements;
+  const companiesRows = document.querySelectorAll('.company');
+  for (companyRow of companiesRows) {
+    companyRow.addEventListener('click', (e) => {handleCompanyClick(e)})
+  };
 }
     
 const handlePageChange = (e) => {
   currentPage = Number(e.target.dataset.value);
   renderCompanies(globalFilteredCompanies || globalSortedCompanies);
 }
-    
+
+const handleCompanyClick = (e) => {
+  let specificCompany;
+  for (globalSortedCompany of globalSortedCompanies) {
+    if(Number(e.target.parentNode.dataset.key) === globalSortedCompany.id) {
+      specificCompany = globalSortedCompany;
+    };
+  };
+  const modalTemplate = `
+  <div class="customModal">
+    <p>id: ${specificCompany.id}</p>
+    <p>name: ${specificCompany.name}</p>
+    <p>city: ${specificCompany.city}</p>
+    <p>total income: ${specificCompany.totalIncome}</p>
+    <p>avarage income: ${specificCompany.totalIncome / specificCompany.incomes.length}</p>
+    <button class="modalClosingBtn">OK!</button>
+  </div>
+  `;
+  table.insertAdjacentHTML('afterend', modalTemplate);
+  const modal = document.querySelector('.customModal');
+  const modalClosingBtn = document.querySelector('.modalClosingBtn');
+  modalClosingBtn.addEventListener('click', () => {
+    document.body.removeChild(modal);
+  })
+}
+
 //Boot
 const bootFunction = async () => {
-  const sortedCompanies = await sortByTotalIncome();
+  const sortedCompanies = (globalSortedCompanies || await sortByTotalIncome());
   renderButtons(sortedCompanies);
   renderCompanies(sortedCompanies);
   filterInput.addEventListener("input", () => {
@@ -94,12 +124,14 @@ const bootFunction = async () => {
 }
     
 const filterByName = async () => {
+  currentPage = 1;
   const companies = globalSortedCompanies;
   const filteredCompanies = companies.filter((i) => i.name.toLowerCase().includes(filterInput.value.toLowerCase()));
   globalFilteredCompanies = filteredCompanies;
   renderButtons(filteredCompanies);
   renderCompanies(filteredCompanies);
 }
+
 
 bootFunction();
 

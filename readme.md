@@ -4,7 +4,7 @@ Companies data display
 
 ## About
 
-Project's live is here: [companiesdatadisplay.netlify.com](companiesdatadisplay.netlify.com)
+Project's live is here: [companiesdatadisplay.netlify.com](https://companiesdatadisplay.netlify.com/)
 
 It takes a while for project to load beacuse of multiple fetches (I guess).
 At the beggining I thought that I would do it in React. Then I was like "react would't really show my vanilla JavaScript skills" so.. It is done fully in pure JavaScript, the only tool I used was parcel bundler for local environment. Had fun doing it!

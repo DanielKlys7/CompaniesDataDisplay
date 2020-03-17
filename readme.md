@@ -4,6 +4,7 @@ Companies data display
 
 ## About
 
+(strongly suggest to click on link with ctrl because github doesn't allow target="_blank)
 Project's live is here: [companiesdatadisplay.netlify.com](https://companiesdatadisplay.netlify.com/)
 
 It takes a while for project to load beacuse of multiple fetches (I guess).
@@ -17,9 +18,9 @@ These instructions will get you a copy of the project up and running on your loc
 
 What things you need to install the software and how to install them
 
-node.js
-npm
-[parcel](https://parceljs.org/) - module bundler
+1. ode.js
+2. npm
+3. [parcel](https://parceljs.org/) - module bundler
 
 ### Installing
 

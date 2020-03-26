@@ -27,6 +27,8 @@ body
   font-size: 9px
   tr
     cursor: pointer
+    &:nth-child(even)
+      background-color: lightgrey
 .customModal
   background-color: grey
   position: absolute
@@ -47,6 +49,8 @@ body
   border: 1px solid black
   border-radius: 10px
   padding: 5px
+.currentPage
+  background-color: lightgray
 
 @media (min-width: 360px)
   .table
@@ -69,6 +73,7 @@ body
   .pageButton
     font-size: 30px
     padding: 12px
+    min-width: 60px
   .table
     font-size: 30px
   .customModal

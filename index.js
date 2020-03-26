@@ -63,6 +63,7 @@ const renderButtons = (array) => {
       handlePageChange(e)
     })
   }
+  handleCurrentPageFocus();
 }
 
 //Render
@@ -83,9 +84,20 @@ const renderCompanies = (array) => {
   };
 }
     
+const handleCurrentPageFocus = () => {
+  const btns = document.getElementsByClassName('pageButton');
+  for (btn of btns) {
+    btn.classList.remove('currentPage')
+    if(currentPage === Number(btn.dataset.value)) {
+      btn.classList.add('currentPage')
+    }
+  }
+}
+
 const handlePageChange = (e) => {
   currentPage = Number(e.target.dataset.value);
   renderCompanies(globalFilteredCompanies || globalSortedCompanies);
+  handleCurrentPageFocus()
 }
 
 const handleCompanyClick = (e) => {

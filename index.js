@@ -2,6 +2,7 @@ const table = document.querySelector('#table')
 const tbody = document.querySelector('#tbody')
 const filterInput = document.querySelector('#filterInput')
 const btnsContainer = document.querySelector('#btnsContainer')
+const btnsContainerBottom = document.querySelector('#btnsContainerBottom')
 const datepicker = document.querySelector('#hwdp')
 
 let globalSortedCompanies;
@@ -58,6 +59,7 @@ const renderButtons = (array) => {
     buttonElement += `<button class="pageButton" data-value=${i}>${i}</button>`
   }
   btnsContainer.innerHTML = buttonElement;
+  btnsContainerBottom.innerHTML = buttonElement;
   pageButtons = document.querySelectorAll('.pageButton')
   for (button of pageButtons) {
     button.addEventListener("click", (e) => {

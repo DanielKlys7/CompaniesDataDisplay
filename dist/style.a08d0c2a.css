@@ -38,6 +38,10 @@ body {
 .table tr:nth-child(even) {
   background-color: lightgrey;
 }
+.table tr td {
+  padding: 5px;
+  border: 1px solid black;
+}
 
 .customModal {
   background-color: grey;

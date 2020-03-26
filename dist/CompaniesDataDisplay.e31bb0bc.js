@@ -122,6 +122,7 @@ const table = document.querySelector('#table');
 const tbody = document.querySelector('#tbody');
 const filterInput = document.querySelector('#filterInput');
 const btnsContainer = document.querySelector('#btnsContainer');
+const datepicker = document.querySelector('#hwdp');
 let globalSortedCompanies;
 let globalFilteredCompanies;
 
@@ -258,10 +259,35 @@ const handleCompanyClick = e => {
     <p>total income: ${specificCompany.totalIncome}</p>
     <p>average income: ${specificCompany.totalIncome / specificCompany.incomes.length}</p>
     <p>Last month total income: ${lastMonthTotalIncome}</p>
+    <div class="datepickers">
+      <input type="date" id="dateFrom"/>
+      <input type="date" id="dateTo"/>
+      <button id="handleBetweenDates">Check!</button>
+    </div>
+    <p>total income between dates: <span id="totalBetweenDates"></span></p>
+    <p>average income between dates: <span id="averageBetweenDates"></span></p>
     <button class="modalClosingBtn">OK!</button>
   </div>
   `;
   table.insertAdjacentHTML('afterend', modalTemplate);
+  const dateFrom = document.getElementById('dateFrom');
+  const dateTo = document.getElementById('dateTo');
+  const betweenDatesHandler = document.getElementById('handleBetweenDates');
+  const totalBetweenDatesDisplay = document.getElementById('totalBetweenDates');
+  const averageBetweenDatesDisplay = document.getElementById('averageBetweenDates');
+
+  const displayCustomDatesIncomes = () => {
+    const timeFrom = new Date(dateFrom.value).getTime();
+    const timeTo = new Date(dateTo.value).getTime();
+    const specificCompanyIncomesBetweenDates = specificCompany.incomes.filter(item => Date.parse(item.date) > timeFrom && Date.parse(item.date) < timeTo);
+    const totalIncomeBetweenDates = specificCompanyIncomesBetweenDates.reduce((previous, current) => {
+      return previous + Number(current.value);
+    }, 0);
+    totalBetweenDatesDisplay.textContent = totalIncomeBetweenDates;
+    averageBetweenDatesDisplay.textContent = totalIncomeBetweenDates / specificCompanyIncomesBetweenDates.length;
+  };
+
+  betweenDatesHandler.addEventListener('click', () => displayCustomDatesIncomes());
   const modal = document.querySelector('.customModal');
   const modalClosingBtn = document.querySelector('.modalClosingBtn');
   modalClosingBtn.addEventListener('click', () => {

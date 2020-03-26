@@ -101,19 +101,30 @@ const handlePageChange = (e) => {
 }
 
 const handleCompanyClick = (e) => {
+  const currentDate = new Date();
+  const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
+  const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 0);
+
   let specificCompany;
   for (globalSortedCompany of globalSortedCompanies) {
     if(Number(e.target.parentNode.dataset.key) === globalSortedCompany.id) {
       specificCompany = globalSortedCompany;
     };
   };
+
+  let lastMonthIncomesOfSpecificCompany = specificCompany.incomes.filter(item => Date.parse(item.date) > firstDay.getTime() && Date.parse(item.date) < lastDay.getTime());
+  let lastMonthTotalIncome = lastMonthIncomesOfSpecificCompany.reduce((previous, current) => {
+    return previous + Number(current.value);
+  }, 0);
+
   const modalTemplate = `
   <div class="customModal">
     <p>id: ${specificCompany.id}</p>
     <p>name: ${specificCompany.name}</p>
     <p>city: ${specificCompany.city}</p>
     <p>total income: ${specificCompany.totalIncome}</p>
-    <p>avarage income: ${specificCompany.totalIncome / specificCompany.incomes.length}</p>
+    <p>average income: ${specificCompany.totalIncome / specificCompany.incomes.length}</p>
+    <p>Last month total income: ${lastMonthTotalIncome}</p>
     <button class="modalClosingBtn">OK!</button>
   </div>
   `;

@@ -41,7 +41,7 @@ body {
 
 .customModal {
   background-color: grey;
-  position: absolute;
+  position: fixed;
   width: 100vw;
   height: 100vh;
   top: 50%;

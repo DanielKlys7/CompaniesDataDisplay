@@ -264,8 +264,8 @@ const handleCompanyClick = e => {
       <input type="date" id="dateTo"/>
       <button id="handleBetweenDates">Check!</button>
     </div>
-    <p>total income between dates: <span id="totalBetweenDates"></span></p>
-    <p>average income between dates: <span id="averageBetweenDates"></span></p>
+    <p>total income between dates: <span id="totalBetweenDates">0</span></p>
+    <p>average income between dates: <span id="averageBetweenDates">0</span></p>
     <button class="modalClosingBtn">OK!</button>
   </div>
   `;
@@ -343,7 +343,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59784" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57533" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

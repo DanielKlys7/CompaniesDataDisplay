@@ -131,8 +131,8 @@ const handleCompanyClick = (e) => {
       <input type="date" id="dateTo"/>
       <button id="handleBetweenDates">Check!</button>
     </div>
-    <p>total income between dates: <span id="totalBetweenDates"></span></p>
-    <p>average income between dates: <span id="averageBetweenDates"></span></p>
+    <p>total income between dates: <span id="totalBetweenDates">0</span></p>
+    <p>average income between dates: <span id="averageBetweenDates">0</span></p>
     <button class="modalClosingBtn">OK!</button>
   </div>
   `;

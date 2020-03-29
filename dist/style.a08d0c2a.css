@@ -67,6 +67,15 @@ body {
   padding: 5px;
 }
 
+.handleBetweenDates {
+  background-color: white;
+  font-size: 14px;
+  margin: 5px;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 5px;
+}
+
 .currentPage {
   background-color: lightgray;
 }

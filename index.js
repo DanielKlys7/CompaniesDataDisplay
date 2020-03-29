@@ -3,7 +3,7 @@ const tbody = document.querySelector('#tbody')
 const filterInput = document.querySelector('#filterInput')
 const btnsContainer = document.querySelector('#btnsContainer')
 const btnsContainerBottom = document.querySelector('#btnsContainerBottom')
-const datepicker = document.querySelector('#hwdp')
+const datepicker = document.querySelector('#datepicker')
 
 let globalSortedCompanies;
 let globalFilteredCompanies;
@@ -104,16 +104,16 @@ const handlePageChange = (e) => {
 }
 
 const handleCompanyClick = (e) => {
-  const currentDate = new Date();
-  const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
-  const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 0);
-
   let specificCompany;
   for (globalSortedCompany of globalSortedCompanies) {
     if(Number(e.target.parentNode.dataset.key) === globalSortedCompany.id) {
       specificCompany = globalSortedCompany;
     };
   };
+
+  const currentDate = new Date();
+  const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
+  const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 0);
 
   let lastMonthIncomesOfSpecificCompany = specificCompany.incomes.filter(item => Date.parse(item.date) > firstDay.getTime() && Date.parse(item.date) < lastDay.getTime());
   let lastMonthTotalIncome = lastMonthIncomesOfSpecificCompany.reduce((previous, current) => {
@@ -131,7 +131,7 @@ const handleCompanyClick = (e) => {
     <div class="datepickers">
       <input type="date" id="dateFrom"/>
       <input type="date" id="dateTo"/>
-      <button id="handleBetweenDates">Check!</button>
+      <button id="handleBetweenDates" class="handleBetweenDates">Check!</button>
     </div>
     <p>total income between dates: <span id="totalBetweenDates">0</span></p>
     <p>average income between dates: <span id="averageBetweenDates">0</span></p>
@@ -166,7 +166,6 @@ const handleCompanyClick = (e) => {
   modalClosingBtn.addEventListener('click', () => {
     document.body.removeChild(modal);
   })
-
 }
 
 //Boot
@@ -181,8 +180,7 @@ const bootFunction = async () => {
     
 const filterByName = async () => {
   currentPage = 1;
-  const companies = globalSortedCompanies;
-  const filteredCompanies = companies.filter((i) => i.name.toLowerCase().includes(filterInput.value.toLowerCase()));
+  const filteredCompanies = globalSortedCompanies.filter((i) => i.name.toLowerCase().includes(filterInput.value.toLowerCase()));
   globalFilteredCompanies = filteredCompanies;
   renderButtons(filteredCompanies);
   renderCompanies(filteredCompanies);

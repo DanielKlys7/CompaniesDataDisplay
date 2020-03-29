@@ -1,8 +1,16 @@
 {
-  "dependencies": {},
+  "name": "code",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {},
   "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "babel-loader": "^8.1.0",
     "cssnano": "^4.1.10",
-    "sass": "^1.26.3"
+    "sass": "^1.26.3",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
   },
   "browserslist": [
     "last 1 Chrome version"

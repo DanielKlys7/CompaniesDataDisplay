@@ -178,18 +178,19 @@ const renderButtons = array => {
   const amountOfPages = Math.ceil(array.length / amountOfItemsPerPage);
   let buttonElement = "";
 
-  for (let i = 0; i <= 3; i++) {
-    if (currentPage + i > 20) break;
-    buttonElement += `<button class="pageButton" data-value=${currentPage + i}>${currentPage + i}</button>`;
+  for (let i = -3; i <= 3; i++) {
+    if (currentPage + i <= 20 && currentPage + i > 0) {
+      buttonElement += `<button class="pageButton" data-value=${currentPage + i}>${currentPage + i}</button>`;
+    }
   }
 
   ;
   btnsContainers.forEach(i => i.innerHTML = `
-    <button class="previousPageBtn">&#8592; previous</button>
     <button class="pageButton" data-value="1">first</button>
+    <button class="previousPageBtn">&#8592; previous</button>
     ${buttonElement}
-    <button class="pageButton" data-value=${amountOfPages}>last</button>
-    <button class="nextPageBtn">next &#8594;</button>`);
+    <button class="nextPageBtn">next &#8594;</button>
+    <button class="pageButton" data-value=${amountOfPages}>last</button>`);
   pageButtons = document.querySelectorAll('.pageButton');
 
   for (button of pageButtons) {
@@ -373,7 +374,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59150" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59954" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

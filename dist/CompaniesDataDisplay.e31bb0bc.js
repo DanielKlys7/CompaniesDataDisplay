@@ -118,12 +118,10 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"index.js":[function(require,module,exports) {
-const table = document.querySelector('#table');
-const tbody = document.querySelector('#tbody');
-const filterInput = document.querySelector('#filterInput');
-const btnsContainer = document.querySelector('#btnsContainer');
-const btnsContainerBottom = document.querySelector('#btnsContainerBottom');
-const datepicker = document.querySelector('#datepicker');
+const table = document.querySelector('.table');
+const tbody = document.querySelector('.table__body');
+const filterInput = document.querySelector('.filterInput');
+const btnsContainers = document.querySelectorAll('.btnsContainer');
 let globalSortedCompanies;
 let globalFilteredCompanies;
 
@@ -147,6 +145,7 @@ const mergeFetchObjects = async () => {
     fetchedCompany.incomes = await fetchedIncomes.incomes;
   }
 
+  ;
   return fetchedCompanies;
 };
 
@@ -182,8 +181,8 @@ const renderButtons = array => {
     buttonElement += `<button class="pageButton" data-value=${i}>${i}</button>`;
   }
 
-  btnsContainer.innerHTML = buttonElement;
-  btnsContainerBottom.innerHTML = buttonElement;
+  ;
+  btnsContainers.forEach(i => i.innerHTML = buttonElement);
   pageButtons = document.querySelectorAll('.pageButton');
 
   for (button of pageButtons) {
@@ -192,20 +191,21 @@ const renderButtons = array => {
     });
   }
 
+  ;
   handleCurrentPageFocus();
 }; //Render
 
 
 const renderCompanies = array => {
   const itemsOfPage = array.slice(currentPage * amountOfItemsPerPage - amountOfItemsPerPage, amountOfItemsPerPage * currentPage);
-  const companiesIntoElements = itemsOfPage.map(company => `<tr class="company" data-key=${company.id}>
+  const companiesIntoElements = itemsOfPage.map(company => `<tr class="body__company" data-key=${company.id}>
       <td>${company.id}</td>
       <td>${company.name}</td>
       <td>${company.city}</td>
       <td>${company.totalIncome.toFixed(2)}</td>
     </tr>`).join('');
   tbody.innerHTML = companiesIntoElements;
-  const companiesRows = document.querySelectorAll('.company');
+  const companiesRows = document.querySelectorAll('.body__company');
 
   for (companyRow of companiesRows) {
     companyRow.addEventListener('click', e => {
@@ -261,22 +261,22 @@ const handleCompanyClick = e => {
     <p>total income: ${specificCompany.totalIncome}</p>
     <p>average income: ${specificCompany.totalIncome / specificCompany.incomes.length}</p>
     <p>Last month total income: ${lastMonthTotalIncome}</p>
-    <div class="datepickers">
-      <input type="date" id="dateFrom"/>
-      <input type="date" id="dateTo"/>
-      <button id="handleBetweenDates" class="handleBetweenDates">Check!</button>
+    <div class="datePickers">
+      <input type="date" class="datePickers__dateFrom"/>
+      <input type="date" class="datePickers__dateTo"/>
+      <button class="handleBetweenDatesBtn">Check!</button>
     </div>
-    <p>total income between dates: <span id="totalBetweenDates">0</span></p>
-    <p>average income between dates: <span id="averageBetweenDates">0</span></p>
+    <p>total income between dates: <span class="totalBetweenDatesDisplay">0</span></p>
+    <p>average income between dates: <span class="averageBetweenDatesDisplay">0</span></p>
     <button class="modalClosingBtn">OK!</button>
   </div>
   `;
   table.insertAdjacentHTML('afterend', modalTemplate);
-  const dateFrom = document.getElementById('dateFrom');
-  const dateTo = document.getElementById('dateTo');
-  const betweenDatesHandler = document.getElementById('handleBetweenDates');
-  const totalBetweenDatesDisplay = document.getElementById('totalBetweenDates');
-  const averageBetweenDatesDisplay = document.getElementById('averageBetweenDates');
+  const dateFrom = document.querySelector('.datePickers__dateFrom');
+  const dateTo = document.querySelector('.datePickers__dateTo');
+  const betweenDatesHandler = document.querySelector('.handleBetweenDatesBtn');
+  const totalBetweenDatesDisplay = document.querySelector('.totalBetweenDatesDisplay');
+  const averageBetweenDatesDisplay = document.querySelector('.averageBetweenDatesDisplay');
 
   const displayCustomDatesIncomes = () => {
     const timeFrom = new Date(dateFrom.value).getTime();
@@ -344,7 +344,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49923" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50107" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

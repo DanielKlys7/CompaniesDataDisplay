@@ -54,10 +54,17 @@ const amountOfItemsPerPage = 15;
 const renderButtons = (array) => {
   const amountOfPages = Math.ceil(array.length / amountOfItemsPerPage);
   let buttonElement = "";
-  for (let i = 1; i <= amountOfPages; i++) {
-    buttonElement += `<button class="pageButton" data-value=${i}>${i}</button>`
+  for (let i = 0; i <= 3; i++) {
+    if (currentPage + i > 20) break;
+    buttonElement += `<button class="pageButton" data-value=${currentPage + i}>${currentPage+ i}</button>`
   };
-  btnsContainers.forEach(i => i.innerHTML = `<button class="previousPageBtn">&#8592; previous</button>${buttonElement}<button class="nextPageBtn">next &#8594;</button>`);
+  btnsContainers.forEach(i => i.innerHTML = `
+    <button class="previousPageBtn">&#8592; previous</button>
+    <button class="pageButton" data-value="1">first</button>
+    ${buttonElement}
+    <button class="pageButton" data-value=${amountOfPages}>last</button>
+    <button class="nextPageBtn">next &#8594;</button>`
+  );
   pageButtons = document.querySelectorAll('.pageButton');
   for (button of pageButtons) {
     button.addEventListener("click", (e) => {
@@ -68,6 +75,7 @@ const renderButtons = (array) => {
     if (currentPage < amountOfPages) {
       currentPage++;
       renderCompanies(globalFilteredCompanies || globalSortedCompanies);
+      renderButtons(globalSortedCompanies);
       handleCurrentPageFocus();
     }
   }
@@ -75,6 +83,7 @@ const renderButtons = (array) => {
     if (currentPage > 1) {
       currentPage--;
       renderCompanies(globalFilteredCompanies || globalSortedCompanies);
+      renderButtons(globalSortedCompanies);
       handleCurrentPageFocus();
     } 
   }
@@ -114,7 +123,8 @@ const handleCurrentPageFocus = () => {
 const handlePageChange = (e) => {
   currentPage = Number(e.target.dataset.value);
   renderCompanies(globalFilteredCompanies || globalSortedCompanies);
-  handleCurrentPageFocus()
+  renderButtons(globalSortedCompanies);
+  handleCurrentPageFocus();
 }
 
 const handleCompanyClick = (e) => {

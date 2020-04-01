@@ -1,4 +1,5 @@
 const table = document.querySelector('.table')
+const wrapper = document.querySelector('.wrapper');
 const tbody = document.querySelector('.table__body')
 const filterInput = document.querySelector('.filterInput')
 const btnsContainers = document.querySelectorAll('.btnsContainer')
@@ -48,7 +49,7 @@ const sortByTotalIncome = async () => {
 let pageButtons;
 
 let currentPage = 1;
-const amountOfItemsPerPage = 30;
+const amountOfItemsPerPage = 15;
 
 const renderButtons = (array) => {
   const amountOfPages = Math.ceil(array.length / amountOfItemsPerPage);
@@ -56,13 +57,29 @@ const renderButtons = (array) => {
   for (let i = 1; i <= amountOfPages; i++) {
     buttonElement += `<button class="pageButton" data-value=${i}>${i}</button>`
   };
-  btnsContainers.forEach(i => i.innerHTML = buttonElement);
+  btnsContainers.forEach(i => i.innerHTML = `<button class="previousPageBtn">&#8592; previous</button>${buttonElement}<button class="nextPageBtn">next &#8594;</button>`);
   pageButtons = document.querySelectorAll('.pageButton');
   for (button of pageButtons) {
     button.addEventListener("click", (e) => {
       handlePageChange(e);
     });
   };
+  const addCurrentPage = () => {
+    if (currentPage < amountOfPages) {
+      currentPage++;
+      renderCompanies(globalFilteredCompanies || globalSortedCompanies);
+      handleCurrentPageFocus();
+    }
+  }
+  const minusCurrentPage = () => {
+    if (currentPage > 1) {
+      currentPage--;
+      renderCompanies(globalFilteredCompanies || globalSortedCompanies);
+      handleCurrentPageFocus();
+    } 
+  }
+  document.querySelectorAll('.previousPageBtn').forEach(i => i.addEventListener('click', () => minusCurrentPage()));
+  document.querySelectorAll('.nextPageBtn').forEach(i => i.addEventListener('click', () => addCurrentPage()));
   handleCurrentPageFocus();
 };
 
@@ -135,7 +152,7 @@ const handleCompanyClick = (e) => {
     <button class="modalClosingBtn">OK!</button>
   </div>
   `;
-  table.insertAdjacentHTML('afterend', modalTemplate);
+  wrapper.insertAdjacentHTML('afterend', modalTemplate);
 
   const dateFrom = document.querySelector('.datePickers__dateFrom');
   const dateTo = document.querySelector('.datePickers__dateTo');

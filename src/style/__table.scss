@@ -1,0 +1,25 @@
+.table {
+  border-collapse: collapse;
+  margin: 10px 0;
+  font-size: 0.9em;
+  th, td {
+    padding: 10px 15px;
+  }
+  border-bottom: 5px solid #485461;
+}
+
+.body tr {
+  border-bottom: 1px solid lightgray;
+  &:nth-of-type(even) {
+    background-color: #485461;
+    background-image: linear-gradient(315deg, #f3f3f3 0%, #bdbdbd 74%);
+  }
+}
+
+.head__topics {
+  background-color: #485461;
+  background-image: linear-gradient(315deg, #485461 0%, #28313b 74%);
+  text-align: left;
+  color: white;
+  font-weight: bold;
+}

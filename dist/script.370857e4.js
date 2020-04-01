@@ -117,8 +117,9 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"index.js":[function(require,module,exports) {
+})({"src/script/index.js":[function(require,module,exports) {
 const table = document.querySelector('.table');
+const wrapper = document.querySelector('.wrapper');
 const tbody = document.querySelector('.table__body');
 const filterInput = document.querySelector('.filterInput');
 const btnsContainers = document.querySelectorAll('.btnsContainer');
@@ -171,7 +172,7 @@ const sortByTotalIncome = async () => {
 
 let pageButtons;
 let currentPage = 1;
-const amountOfItemsPerPage = 30;
+const amountOfItemsPerPage = 15;
 
 const renderButtons = array => {
   const amountOfPages = Math.ceil(array.length / amountOfItemsPerPage);
@@ -182,7 +183,7 @@ const renderButtons = array => {
   }
 
   ;
-  btnsContainers.forEach(i => i.innerHTML = buttonElement);
+  btnsContainers.forEach(i => i.innerHTML = `<button class="previousPageBtn">&#8592; previous</button>${buttonElement}<button class="nextPageBtn">next &#8594;</button>`);
   pageButtons = document.querySelectorAll('.pageButton');
 
   for (button of pageButtons) {
@@ -192,6 +193,25 @@ const renderButtons = array => {
   }
 
   ;
+
+  const addCurrentPage = () => {
+    if (currentPage < amountOfPages) {
+      currentPage++;
+      renderCompanies(globalFilteredCompanies || globalSortedCompanies);
+      handleCurrentPageFocus();
+    }
+  };
+
+  const minusCurrentPage = () => {
+    if (currentPage > 1) {
+      currentPage--;
+      renderCompanies(globalFilteredCompanies || globalSortedCompanies);
+      handleCurrentPageFocus();
+    }
+  };
+
+  document.querySelectorAll('.previousPageBtn').forEach(i => i.addEventListener('click', () => minusCurrentPage()));
+  document.querySelectorAll('.nextPageBtn').forEach(i => i.addEventListener('click', () => addCurrentPage()));
   handleCurrentPageFocus();
 }; //Render
 
@@ -271,7 +291,7 @@ const handleCompanyClick = e => {
     <button class="modalClosingBtn">OK!</button>
   </div>
   `;
-  table.insertAdjacentHTML('afterend', modalTemplate);
+  wrapper.insertAdjacentHTML('afterend', modalTemplate);
   const dateFrom = document.querySelector('.datePickers__dateFrom');
   const dateTo = document.querySelector('.datePickers__dateTo');
   const betweenDatesHandler = document.querySelector('.handleBetweenDatesBtn');
@@ -520,5 +540,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","index.js"], null)
-//# sourceMappingURL=/CompaniesDataDisplay.e31bb0bc.js.map
+},{}]},{},["../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","src/script/index.js"], null)
+//# sourceMappingURL=/script.370857e4.js.map

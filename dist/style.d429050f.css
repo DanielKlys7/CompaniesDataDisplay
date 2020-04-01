@@ -1,0 +1,120 @@
+html {
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body, h1, h2, h3, h4, h5, h6, p, ol, ul {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #485461;
+  background-image: linear-gradient(315deg, #485461 0%, #28313b 74%);
+  font-family: "Roboto";
+}
+
+.wrapper {
+  min-width: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: white;
+  padding: 30px 60px;
+  border-radius: 5px;
+  border: 3px solid #f5b042;
+}
+
+.menu {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.filterInput {
+  padding: 5px;
+  font-size: 1.1em;
+  margin-right: 10px;
+}
+
+.btnsContainer {
+  margin-top: 10px;
+  padding: 5px 0px;
+  display: flex;
+  justify-content: center;
+}
+
+.pageButton {
+  background-color: white;
+  border: none;
+  margin: 0px 2px;
+  min-width: 30px;
+  font-size: 1.2em;
+}
+
+.previousPageBtn,
+.nextPageBtn {
+  background-color: transparent;
+  border: none;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: 0.2s;
+}
+.previousPageBtn:hover,
+.nextPageBtn:hover {
+  background-color: #f5b042;
+  color: white;
+}
+
+.currentPage {
+  background-color: #f5b042;
+  border-radius: 5px;
+  color: white;
+}
+
+.table {
+  border-collapse: collapse;
+  margin: 10px 0;
+  font-size: 0.9em;
+  border-bottom: 5px solid #485461;
+}
+.table th, .table td {
+  padding: 10px 15px;
+}
+
+.body tr {
+  border-bottom: 1px solid lightgray;
+}
+.body tr:nth-of-type(even) {
+  background-color: #485461;
+  background-image: linear-gradient(315deg, #f3f3f3 0%, #bdbdbd 74%);
+}
+
+.head__topics {
+  background-color: #485461;
+  background-image: linear-gradient(315deg, #485461 0%, #28313b 74%);
+  text-align: left;
+  color: white;
+  font-weight: bold;
+}
+
+/*# sourceMappingURL=/style.d429050f.css.map */

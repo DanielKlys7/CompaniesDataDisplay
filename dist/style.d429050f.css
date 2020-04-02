@@ -149,10 +149,12 @@ body {
 
   .filterInput {
     font-size: 1.7em;
+    padding: 0 10px;
   }
 
   .sortInput {
     font-size: 1.7em;
+    padding: 0 10px;
   }
 
   .btnsContainer {

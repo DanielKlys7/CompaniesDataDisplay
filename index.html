@@ -13,11 +13,12 @@
   <div class="wrapper">
     <div class="menu">
       <input type="text" class="filterInput" placeholder="name to filter by">
-      <select class="sortInput">
+      <label for="sortBy" class="sortInput__label">Sort by:</label>
+      <select id="sortBy" class="sortInput">
         <option value="id">ID</option>
         <option value="name">name</option>
         <option value="city">city</option>
-        <option value="totalIncome">total income</option>
+        <option value="totalIncome" selected>total income</option>
       </select>
     </div>
     <div class="btnsContainer"></div>

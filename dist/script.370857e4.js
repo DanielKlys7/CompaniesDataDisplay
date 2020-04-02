@@ -123,6 +123,7 @@ const wrapper = document.querySelector('.wrapper');
 const tbody = document.querySelector('.table__body');
 const filterInput = document.querySelector('.filterInput');
 const btnsContainers = document.querySelectorAll('.btnsContainer');
+let globalCompanies;
 let globalSortedCompanies;
 let globalFilteredCompanies;
 
@@ -159,12 +160,35 @@ const calculateTotalIncome = async () => {
     }, 0);
   }
 
+  globalCompanies = companies;
   return companies;
 };
 
-const sortByTotalIncome = async () => {
-  const companies = await calculateTotalIncome();
-  companies.sort((a, b) => a.totalIncome < b.totalIncome ? 1 : -1);
+const sortByParam = async param => {
+  const companies = globalCompanies || (await calculateTotalIncome());
+
+  switch (param) {
+    case "totalIncome":
+      companies.sort((a, b) => a.totalIncome < b.totalIncome ? 1 : -1);
+      break;
+
+    case "id":
+      companies.sort((a, b) => Number(a.id) < Number(b.id) ? -1 : 1);
+      break;
+
+    case "name":
+      companies.sort((a, b) => a.name < b.name ? -1 : 1);
+      break;
+
+    case "city":
+      companies.sort((a, b) => a.city < b.city ? -1 : 1);
+      break;
+
+    default:
+      companies.sort((a, b) => a.totalIncome < b.totalIncome ? 1 : -1);
+      break;
+  }
+
   globalSortedCompanies = companies;
   return companies;
 }; //Pagination
@@ -332,7 +356,8 @@ const handleCompanyClick = e => {
   modalClosingBtn.addEventListener('click', () => {
     document.body.removeChild(modal);
   });
-};
+}; //Filter By Name
+
 
 const filterByName = async () => {
   currentPage = 1;
@@ -340,11 +365,17 @@ const filterByName = async () => {
   globalFilteredCompanies = filteredCompanies;
   renderButtons(filteredCompanies);
   renderCompanies(filteredCompanies);
-}; //Boot
+}; //Sort by value
 
+
+const sortByInput = document.querySelector('.sortInput');
+sortByInput.addEventListener('change', e => {
+  sortByParam(e.target.value);
+  renderCompanies(globalSortedCompanies);
+}); //Boot
 
 const bootFunction = async () => {
-  const sortedCompanies = globalSortedCompanies || (await sortByTotalIncome());
+  const sortedCompanies = globalSortedCompanies || (await sortByParam("totalIncome"));
   renderButtons(sortedCompanies);
   renderCompanies(sortedCompanies);
   filterInput.addEventListener("input", () => {
@@ -381,7 +412,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54829" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56969" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

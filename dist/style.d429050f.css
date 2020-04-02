@@ -57,6 +57,12 @@ body {
   flex-direction: row;
 }
 
+.sortInput__label {
+  font-size: 1.1em;
+  line-height: 200%;
+  margin-right: 10px;
+}
+
 .filterInput {
   padding: 5px;
   font-size: 1.1em;
@@ -116,6 +122,10 @@ body {
 @media (min-width: 1024px) {
   .filterInput {
     font-size: 2em;
+  }
+
+  .sortInput__label {
+    font-size: 1.8em;
   }
 
   .sortInput {

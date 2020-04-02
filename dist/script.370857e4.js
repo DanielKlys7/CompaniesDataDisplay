@@ -203,7 +203,7 @@ const renderButtons = array => {
   let buttonElement = "";
 
   for (let i = -1; i <= 2; i++) {
-    if (currentPage + i <= 20 && currentPage + i > 0 && i <= amountOfPages) {
+    if (currentPage + i <= 20 && currentPage + i > 0 && i < amountOfPages) {
       buttonElement += `<button class="pageButton" data-value=${currentPage + i}>${currentPage + i}</button>`;
     }
   }
@@ -228,7 +228,7 @@ const renderButtons = array => {
   const addCurrentPage = () => {
     if (currentPage < amountOfPages) {
       currentPage++;
-      renderCompanies(globalFilteredCompanies || globalSortedCompanies);
+      renderCompanies(globalSortedCompanies);
       renderButtons(globalSortedCompanies);
       handleCurrentPageFocus();
     }
@@ -237,7 +237,7 @@ const renderButtons = array => {
   const minusCurrentPage = () => {
     if (currentPage > 1) {
       currentPage--;
-      renderCompanies(globalFilteredCompanies || globalSortedCompanies);
+      renderCompanies(globalSortedCompanies);
       renderButtons(globalSortedCompanies);
       handleCurrentPageFocus();
     }
@@ -262,7 +262,7 @@ const handleCurrentPageFocus = () => {
 
 const handlePageChange = e => {
   currentPage = Number(e.target.dataset.value);
-  renderCompanies(globalFilteredCompanies || globalSortedCompanies);
+  renderCompanies(globalSortedCompanies);
   renderButtons(globalSortedCompanies);
   handleCurrentPageFocus();
 }; //Render
@@ -371,7 +371,7 @@ const filterByName = async () => {
 const sortByInput = document.querySelector('.sortInput');
 sortByInput.addEventListener('change', e => {
   filterInput.value = "";
-  filterByName();
+  currentPage = 1;
   sortByParam(e.target.value);
   renderCompanies(globalSortedCompanies);
   renderButtons(globalSortedCompanies);

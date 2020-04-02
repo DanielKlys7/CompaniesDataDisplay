@@ -132,11 +132,11 @@ const handlePageChange = (e) => {
 const renderCompanies = (array) => {
   const itemsOfPage = array.slice((currentPage * amountOfItemsPerPage - amountOfItemsPerPage), (amountOfItemsPerPage * currentPage));
   const companiesIntoElements = itemsOfPage.map((company) => (
-    `<tr class="body__company" data-key=${company.id}>
-      <td>${company.id}</td>
-      <td>${company.name}</td>
-      <td>${company.city}</td>
-      <td>${company.totalIncome.toFixed(2)}</td>
+    `<tr class="body__company company" data-key=${company.id}>
+      <td class="company__id">${company.id}</td>
+      <td class="company__name">${company.name}</td>
+      <td class="company__city">${company.city}</td>
+      <td class="company__totalIncome">${company.totalIncome.toFixed(2)}</td>
     </tr>`
     )).join('');
   tbody.innerHTML = companiesIntoElements;
@@ -166,13 +166,13 @@ const handleCompanyClick = (e) => {
 
   const modalTemplate = `
   <div class="customModal">
-    <div class="customModal__basicData">
-      <p>id: ${specificCompany.id}</p>
-      <p>name: ${specificCompany.name}</p>
-      <p>city: ${specificCompany.city}</p>
-      <p>total income: ${specificCompany.totalIncome}</p>
-      <p>average income: ${specificCompany.totalIncome / specificCompany.incomes.length}</p>
-      <p>Last month total income: ${lastMonthTotalIncome}</p>
+    <div class="customModal__basicData basicData">
+      <p class="basicData__id" >id: ${specificCompany.id}</p>
+      <p class="basicData__name">name: ${specificCompany.name}</p>
+      <p class="basicData__city">city: ${specificCompany.city}</p>
+      <p class="basicData__totalIncome">total income: ${specificCompany.totalIncome}</p>
+      <p class="basicData__averageIncome">average income: ${specificCompany.totalIncome / specificCompany.incomes.length}</p>
+      <p class="basicData__lastMonthTotal">Last month total income: ${lastMonthTotalIncome}</p>
     </div>
     <div class="datePickers">
       <label for="dateFrom">Date from:</label>

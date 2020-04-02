@@ -82,6 +82,7 @@ body {
   margin: 0px 2px;
   min-width: 30px;
   font-size: 1.2em;
+  cursor: pointer;
 }
 
 .previousPageBtn,
@@ -91,6 +92,7 @@ body {
   font-weight: bold;
   border-radius: 5px;
   transition: 0.2s;
+  cursor: pointer;
 }
 .previousPageBtn:hover,
 .nextPageBtn:hover {
@@ -172,6 +174,7 @@ body {
 
 .body tr {
   border-bottom: 1px solid lightgray;
+  cursor: pointer;
 }
 .body tr:nth-of-type(even) {
   background-color: #485461;
@@ -195,6 +198,22 @@ body {
   .table {
     min-height: 0;
     font-size: 0.9em;
+  }
+
+  .company__id {
+    width: 10%;
+  }
+
+  .company__name {
+    width: 50%;
+  }
+
+  .company__city {
+    width: 25%;
+  }
+
+  .company__totalIncome {
+    width: 15%;
   }
 }
 .customModal {
@@ -235,6 +254,7 @@ body {
   padding: 4px 15px;
   border-radius: 8px;
   font-size: 1.5em;
+  cursor: pointer;
 }
 
 .modalClosingBtn {
@@ -246,6 +266,7 @@ body {
   font-size: 1.5em;
   border-radius: 5px;
   border: 1px solid #f5b042;
+  cursor: pointer;
 }
 
 @media (min-width: 768px) {

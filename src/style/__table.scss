@@ -9,6 +9,7 @@
 
 .body tr {
   border-bottom: 1px solid lightgray;
+  cursor: pointer;
   &:nth-of-type(even) {
     background-color: #485461;
     background-image: linear-gradient(315deg, #f3f3f3 0%, #bdbdbd 74%);
@@ -33,5 +34,17 @@
   .table {
     min-height: 0;
     font-size: 0.9em;
+  }
+  .company__id {
+    width: 10%;
+  }
+  .company__name {
+    width: 50%;
+  }
+  .company__city {
+    width: 25%;
+  }
+  .company__totalIncome {
+    width: 15%;
   }
 }

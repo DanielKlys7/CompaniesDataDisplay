@@ -1,6 +1,5 @@
 .table {
   border-collapse: collapse;
-  margin: 10px 0;
   font-size: 0.9em;
   th, td {
     padding: 10px 15px;
@@ -22,4 +21,17 @@
   text-align: left;
   color: white;
   font-weight: bold;
+}
+
+@media (min-width: 1024px) {
+  .table {
+    font-size: 1.5em;
+  }
+}
+
+@media (min-width: 1280px) {
+  .table {
+    min-height: 0;
+    font-size: 0.9em;
+  }
 }

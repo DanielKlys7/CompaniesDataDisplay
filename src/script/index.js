@@ -54,7 +54,7 @@ const amountOfItemsPerPage = 15;
 const renderButtons = (array) => {
   const amountOfPages = Math.ceil(array.length / amountOfItemsPerPage);
   let buttonElement = "";
-  for (let i = -3; i <= 3; i++) {
+  for (let i = -1; i <= 2; i++) {
     if ((currentPage + i <= 20) && (currentPage + i > 0)) {
       buttonElement += `<button class="pageButton" data-value=${currentPage + i}>${currentPage+ i}</button>`
     }
@@ -93,24 +93,6 @@ const renderButtons = (array) => {
   handleCurrentPageFocus();
 };
 
-//Render
-const renderCompanies = (array) => {
-  const itemsOfPage = array.slice((currentPage * amountOfItemsPerPage - amountOfItemsPerPage), (amountOfItemsPerPage * currentPage));
-  const companiesIntoElements = itemsOfPage.map((company) => (
-    `<tr class="body__company" data-key=${company.id}>
-      <td>${company.id}</td>
-      <td>${company.name}</td>
-      <td>${company.city}</td>
-      <td>${company.totalIncome.toFixed(2)}</td>
-    </tr>`
-    )).join('');
-  tbody.innerHTML = companiesIntoElements;
-  const companiesRows = document.querySelectorAll('.body__company');
-  for (companyRow of companiesRows) {
-    companyRow.addEventListener('click', (e) => {handleCompanyClick(e)})
-  };
-}
-    
 const handleCurrentPageFocus = () => {
   const btns = document.getElementsByClassName('pageButton');
   for (btn of btns) {
@@ -128,6 +110,25 @@ const handlePageChange = (e) => {
   handleCurrentPageFocus();
 }
 
+//Render
+const renderCompanies = (array) => {
+  const itemsOfPage = array.slice((currentPage * amountOfItemsPerPage - amountOfItemsPerPage), (amountOfItemsPerPage * currentPage));
+  const companiesIntoElements = itemsOfPage.map((company) => (
+    `<tr class="body__company" data-key=${company.id}>
+      <td>${company.id}</td>
+      <td>${company.name}</td>
+      <td>${company.city}</td>
+      <td>${company.totalIncome.toFixed(2)}</td>
+    </tr>`
+    )).join('');
+  tbody.innerHTML = companiesIntoElements;
+  const companiesRows = document.querySelectorAll('.body__company');
+  for (companyRow of companiesRows) {
+    companyRow.addEventListener('click', (e) => {handleCompanyClick(e)})
+  };
+}
+
+//Company click and modal
 const handleCompanyClick = (e) => {
   let specificCompany;
   for (globalSortedCompany of globalSortedCompanies) {
@@ -147,19 +148,25 @@ const handleCompanyClick = (e) => {
 
   const modalTemplate = `
   <div class="customModal">
-    <p>id: ${specificCompany.id}</p>
-    <p>name: ${specificCompany.name}</p>
-    <p>city: ${specificCompany.city}</p>
-    <p>total income: ${specificCompany.totalIncome}</p>
-    <p>average income: ${specificCompany.totalIncome / specificCompany.incomes.length}</p>
-    <p>Last month total income: ${lastMonthTotalIncome}</p>
+    <div class="customModal__basicData">
+      <p>id: ${specificCompany.id}</p>
+      <p>name: ${specificCompany.name}</p>
+      <p>city: ${specificCompany.city}</p>
+      <p>total income: ${specificCompany.totalIncome}</p>
+      <p>average income: ${specificCompany.totalIncome / specificCompany.incomes.length}</p>
+      <p>Last month total income: ${lastMonthTotalIncome}</p>
+    </div>
     <div class="datePickers">
-      <input type="date" class="datePickers__dateFrom"/>
-      <input type="date" class="datePickers__dateTo"/>
+      <label for="dateFrom">Date from:</label>
+      <input id="dateFrom" type="date" class="datePickers__dateFrom" placeholder="Date from"/>
+      <label for="dateTo">Date to:</label>
+      <input id="dateTo" type="date" class="datePickers__dateTo placeholder="Date to"/>
       <button class="handleBetweenDatesBtn">Check!</button>
     </div>
-    <p>total income between dates: <span class="totalBetweenDatesDisplay">0</span></p>
-    <p>average income between dates: <span class="averageBetweenDatesDisplay">0</span></p>
+    <div class="datePickers__dataDisplay">
+      <p>total income between dates: <span class="totalBetweenDatesDisplay">0</span></p>
+      <p>average income between dates: <span class="averageBetweenDatesDisplay">0</span></p>
+    </div>
     <button class="modalClosingBtn">OK!</button>
   </div>
   `;
@@ -193,6 +200,14 @@ const handleCompanyClick = (e) => {
   })
 }
 
+const filterByName = async () => {
+  currentPage = 1;
+  const filteredCompanies = globalSortedCompanies.filter((i) => i.name.toLowerCase().includes(filterInput.value.toLowerCase()));
+  globalFilteredCompanies = filteredCompanies;
+  renderButtons(filteredCompanies);
+  renderCompanies(filteredCompanies);
+}
+
 //Boot
 const bootFunction = async () => {
   const sortedCompanies = (globalSortedCompanies || await sortByTotalIncome());
@@ -203,13 +218,6 @@ const bootFunction = async () => {
   })
 }
     
-const filterByName = async () => {
-  currentPage = 1;
-  const filteredCompanies = globalSortedCompanies.filter((i) => i.name.toLowerCase().includes(filterInput.value.toLowerCase()));
-  globalFilteredCompanies = filteredCompanies;
-  renderButtons(filteredCompanies);
-  renderCompanies(filteredCompanies);
-}
 
 bootFunction();
 

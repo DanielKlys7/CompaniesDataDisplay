@@ -1,18 +1,18 @@
 .wrapper {
-  min-width: 60%;
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   background-color: white;
-  padding: 30px 60px;
-  border-radius: 5px;
-  border: 3px solid #f5b042;
-  box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.46);
+  width: 100vw;
+  min-height: 100vh;
 }
 
 .menu {
   width: 100%;
   display: flex;
+  margin-top: 20px;
+  justify-content: center;
   flex-direction: row;
 }
 
@@ -23,7 +23,7 @@
 }
 
 .btnsContainer {
-  margin-top: 10px;
+  margin: 15px;
   padding: 5px 0px;
   display: flex;
   justify-content: center;
@@ -54,4 +54,51 @@
   background-color: #f5b042;
   border-radius: 5px;
   color: white;
+}
+
+@media (min-width: 768px) {
+  .filterInput {
+    font-size: 1.2em;
+  }
+  .btnsContainer {
+    font-size: 1.4em;
+  }
+  .previousPageBtn,
+  .nextPageBtn {
+    font-size: 1.3em;
+    font-weight: normal;
+  }
+}
+
+@media (min-width: 1024px) {
+  .filterInput {
+    font-size: 2em;
+  }
+  .sortInput {
+    font-size: 2em;
+  }
+  .btnsContainer {
+    font-size: 1.8em;
+  }
+}
+
+@media (min-width: 1280px) {
+  .wrapper {
+    min-width: 60%;
+    max-width: 70%;
+    padding: 10px 50px;
+    justify-content: center;
+    border-radius: 10px;
+    border: 2px solid #f5b042;
+    min-height: 60%;
+  }
+  .filterInput {
+    font-size: 1.7em;
+  }
+  .sortInput {
+    font-size: 1.7em;
+  }
+  .btnsContainer {
+    font-size: 1.2em;
+  }
 }

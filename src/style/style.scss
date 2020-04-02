@@ -1,15 +1,23 @@
 @import "./_reset";
 
 body {
-  width: 100vw;
-  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #485461;
   background-image: linear-gradient(315deg, #485461 0%, #28313b 74%);
   font-family: 'Roboto';
+  font-size: 12px;
+  width: 100vw;
+  min-height: 100vh;
+}
+
+@media (min-width: 768px) {
+  body {
+    font-size: 16px;
+  }
 }
 
 @import "./_menu";
 @import "./_table";
+@import "./_modal";

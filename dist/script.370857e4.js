@@ -178,7 +178,7 @@ const renderButtons = array => {
   const amountOfPages = Math.ceil(array.length / amountOfItemsPerPage);
   let buttonElement = "";
 
-  for (let i = -3; i <= 3; i++) {
+  for (let i = -1; i <= 2; i++) {
     if (currentPage + i <= 20 && currentPage + i > 0) {
       buttonElement += `<button class="pageButton" data-value=${currentPage + i}>${currentPage + i}</button>`;
     }
@@ -222,6 +222,25 @@ const renderButtons = array => {
   document.querySelectorAll('.previousPageBtn').forEach(i => i.addEventListener('click', () => minusCurrentPage()));
   document.querySelectorAll('.nextPageBtn').forEach(i => i.addEventListener('click', () => addCurrentPage()));
   handleCurrentPageFocus();
+};
+
+const handleCurrentPageFocus = () => {
+  const btns = document.getElementsByClassName('pageButton');
+
+  for (btn of btns) {
+    btn.classList.remove('currentPage');
+
+    if (currentPage === Number(btn.dataset.value)) {
+      btn.classList.add('currentPage');
+    }
+  }
+};
+
+const handlePageChange = e => {
+  currentPage = Number(e.target.dataset.value);
+  renderCompanies(globalFilteredCompanies || globalSortedCompanies);
+  renderButtons(globalSortedCompanies);
+  handleCurrentPageFocus();
 }; //Render
 
 
@@ -243,26 +262,8 @@ const renderCompanies = array => {
   }
 
   ;
-};
+}; //Company click and modal
 
-const handleCurrentPageFocus = () => {
-  const btns = document.getElementsByClassName('pageButton');
-
-  for (btn of btns) {
-    btn.classList.remove('currentPage');
-
-    if (currentPage === Number(btn.dataset.value)) {
-      btn.classList.add('currentPage');
-    }
-  }
-};
-
-const handlePageChange = e => {
-  currentPage = Number(e.target.dataset.value);
-  renderCompanies(globalFilteredCompanies || globalSortedCompanies);
-  renderButtons(globalSortedCompanies);
-  handleCurrentPageFocus();
-};
 
 const handleCompanyClick = e => {
   let specificCompany;
@@ -285,19 +286,25 @@ const handleCompanyClick = e => {
   }, 0);
   const modalTemplate = `
   <div class="customModal">
-    <p>id: ${specificCompany.id}</p>
-    <p>name: ${specificCompany.name}</p>
-    <p>city: ${specificCompany.city}</p>
-    <p>total income: ${specificCompany.totalIncome}</p>
-    <p>average income: ${specificCompany.totalIncome / specificCompany.incomes.length}</p>
-    <p>Last month total income: ${lastMonthTotalIncome}</p>
+    <div class="customModal__basicData">
+      <p>id: ${specificCompany.id}</p>
+      <p>name: ${specificCompany.name}</p>
+      <p>city: ${specificCompany.city}</p>
+      <p>total income: ${specificCompany.totalIncome}</p>
+      <p>average income: ${specificCompany.totalIncome / specificCompany.incomes.length}</p>
+      <p>Last month total income: ${lastMonthTotalIncome}</p>
+    </div>
     <div class="datePickers">
-      <input type="date" class="datePickers__dateFrom"/>
-      <input type="date" class="datePickers__dateTo"/>
+      <label for="dateFrom">Date from:</label>
+      <input id="dateFrom" type="date" class="datePickers__dateFrom" placeholder="Date from"/>
+      <label for="dateTo">Date to:</label>
+      <input id="dateTo" type="date" class="datePickers__dateTo placeholder="Date to"/>
       <button class="handleBetweenDatesBtn">Check!</button>
     </div>
-    <p>total income between dates: <span class="totalBetweenDatesDisplay">0</span></p>
-    <p>average income between dates: <span class="averageBetweenDatesDisplay">0</span></p>
+    <div class="datePickers__dataDisplay">
+      <p>total income between dates: <span class="totalBetweenDatesDisplay">0</span></p>
+      <p>average income between dates: <span class="averageBetweenDatesDisplay">0</span></p>
+    </div>
     <button class="modalClosingBtn">OK!</button>
   </div>
   `;
@@ -325,6 +332,14 @@ const handleCompanyClick = e => {
   modalClosingBtn.addEventListener('click', () => {
     document.body.removeChild(modal);
   });
+};
+
+const filterByName = async () => {
+  currentPage = 1;
+  const filteredCompanies = globalSortedCompanies.filter(i => i.name.toLowerCase().includes(filterInput.value.toLowerCase()));
+  globalFilteredCompanies = filteredCompanies;
+  renderButtons(filteredCompanies);
+  renderCompanies(filteredCompanies);
 }; //Boot
 
 
@@ -335,14 +350,6 @@ const bootFunction = async () => {
   filterInput.addEventListener("input", () => {
     filterByName();
   });
-};
-
-const filterByName = async () => {
-  currentPage = 1;
-  const filteredCompanies = globalSortedCompanies.filter(i => i.name.toLowerCase().includes(filterInput.value.toLowerCase()));
-  globalFilteredCompanies = filteredCompanies;
-  renderButtons(filteredCompanies);
-  renderCompanies(filteredCompanies);
 };
 
 bootFunction();
@@ -374,7 +381,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59954" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54829" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

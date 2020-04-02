@@ -73,7 +73,7 @@ const renderButtons = (array) => {
   const amountOfPages = Math.ceil(array.length / amountOfItemsPerPage);
   let buttonElement = "";
   for (let i = -1; i <= 2; i++) {
-    if ((currentPage + i <= 20) && (currentPage + i > 0)) {
+    if ((currentPage + i <= 20) && (currentPage + i > 0) && (i <= amountOfPages)) {
       buttonElement += `<button class="pageButton" data-value=${currentPage + i}>${currentPage+ i}</button>`
     }
   };
@@ -228,8 +228,11 @@ const filterByName = async () => {
 //Sort by value
 const sortByInput = document.querySelector('.sortInput');
 sortByInput.addEventListener('change', (e) => {
+  filterInput.value = "";
+  filterByName();
   sortByParam(e.target.value);
   renderCompanies(globalSortedCompanies);
+  renderButtons(globalSortedCompanies);
 })
 
 //Boot

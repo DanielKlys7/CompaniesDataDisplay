@@ -193,7 +193,7 @@ const sortByParam = async param => {
   return companies;
 };
 
-const checkRenderArray = () => {
+const checkArrayToRender = () => {
   if (!filterInput.value) return globalSortedCompanies;
   return globalFilteredCompanies;
 }; //Pagination
@@ -231,7 +231,7 @@ const renderButtons = array => {
   ;
 
   const addCurrentPage = () => {
-    const companiesToRender = checkRenderArray();
+    const companiesToRender = checkArrayToRender();
 
     if (currentPage < amountOfPages) {
       currentPage++;
@@ -242,7 +242,7 @@ const renderButtons = array => {
   };
 
   const minusCurrentPage = () => {
-    const companiesToRender = checkRenderArray();
+    const companiesToRender = checkArrayToRender();
 
     if (currentPage > 1) {
       currentPage--;
@@ -270,7 +270,7 @@ const handleCurrentPageFocus = () => {
 };
 
 const handlePageChange = e => {
-  const companiesToRender = checkRenderArray();
+  const companiesToRender = checkArrayToRender();
   currentPage = Number(e.target.dataset.value);
   renderCompanies(companiesToRender);
   renderButtons(companiesToRender);
@@ -279,6 +279,8 @@ const handlePageChange = e => {
 
 
 const renderCompanies = array => {
+  const loader = document.querySelector('.loader');
+  if (loader) loader.parentNode.removeChild(loader);
   const itemsOfPage = array.slice(currentPage * amountOfItemsPerPage - amountOfItemsPerPage, amountOfItemsPerPage * currentPage);
   const companiesIntoElements = itemsOfPage.map(company => `<tr class="body__company company" data-key=${company.id}>
       <td class="company__id">${company.id}</td>
@@ -300,6 +302,7 @@ const renderCompanies = array => {
 
 
 const handleCompanyClick = e => {
+  wrapper.classList.add('notClickable');
   let specificCompany;
 
   for (globalSortedCompany of globalSortedCompanies) {
@@ -364,6 +367,7 @@ const handleCompanyClick = e => {
   const modal = document.querySelector('.customModal');
   const modalClosingBtn = document.querySelector('.modalClosingBtn');
   modalClosingBtn.addEventListener('click', () => {
+    wrapper.classList.remove('notClickable');
     document.body.removeChild(modal);
   });
 }; //Filter By Name 
@@ -425,7 +429,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51558" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55175" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

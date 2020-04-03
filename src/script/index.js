@@ -63,7 +63,7 @@ const sortByParam = async (param) => {
   return companies;
 }
 
-const checkRenderArray = () => {
+const checkArrayToRender = () => {
   if (!filterInput.value) return globalSortedCompanies;
   return globalFilteredCompanies
 } 
@@ -95,7 +95,7 @@ const renderButtons = (array) => {
     });
   };
   const addCurrentPage = () => {
-    const companiesToRender = checkRenderArray();
+    const companiesToRender = checkArrayToRender();
     if (currentPage < amountOfPages) {
       currentPage++;
       renderCompanies(companiesToRender);
@@ -104,7 +104,7 @@ const renderButtons = (array) => {
     }
   }
   const minusCurrentPage = () => {
-    const companiesToRender = checkRenderArray();
+    const companiesToRender = checkArrayToRender();
     if (currentPage > 1) {
       currentPage--;
       renderCompanies(companiesToRender);
@@ -128,7 +128,7 @@ const handleCurrentPageFocus = () => {
 }
 
 const handlePageChange = (e) => {
-  const companiesToRender = checkRenderArray();
+  const companiesToRender = checkArrayToRender();
   currentPage = Number(e.target.dataset.value);
   renderCompanies(companiesToRender);
   renderButtons(companiesToRender);
@@ -137,6 +137,8 @@ const handlePageChange = (e) => {
 
 //Render
 const renderCompanies = (array) => {
+  const loader = document.querySelector('.loader');
+  if (loader) loader.parentNode.removeChild(loader);
   const itemsOfPage = array.slice((currentPage * amountOfItemsPerPage - amountOfItemsPerPage), (amountOfItemsPerPage * currentPage));
   const companiesIntoElements = itemsOfPage.map((company) => (
     `<tr class="body__company company" data-key=${company.id}>
@@ -155,6 +157,7 @@ const renderCompanies = (array) => {
 
 //Company click and modal
 const handleCompanyClick = (e) => {
+  wrapper.classList.add('notClickable');
   let specificCompany;
   for (globalSortedCompany of globalSortedCompanies) {
     if(Number(e.target.parentNode.dataset.key) === globalSortedCompany.id) {
@@ -221,6 +224,7 @@ const handleCompanyClick = (e) => {
   const modal = document.querySelector('.customModal');
   const modalClosingBtn = document.querySelector('.modalClosingBtn');
   modalClosingBtn.addEventListener('click', () => {
+    wrapper.classList.remove('notClickable');
     document.body.removeChild(modal);
   })
 }

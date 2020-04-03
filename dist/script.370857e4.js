@@ -173,7 +173,7 @@ const sortByParam = async param => {
       break;
 
     case "id":
-      companies.sort((a, b) => Number(a.id) < Number(b.id) ? -1 : 1);
+      companies.sort((a, b) => a.id < b.id ? -1 : 1);
       break;
 
     case "name":
@@ -191,6 +191,11 @@ const sortByParam = async param => {
 
   globalSortedCompanies = companies;
   return companies;
+};
+
+const checkRenderArray = () => {
+  if (!filterInput.value) return globalSortedCompanies;
+  return globalFilteredCompanies;
 }; //Pagination
 
 
@@ -226,19 +231,23 @@ const renderButtons = array => {
   ;
 
   const addCurrentPage = () => {
+    const companiesToRender = checkRenderArray();
+
     if (currentPage < amountOfPages) {
       currentPage++;
-      renderCompanies(globalSortedCompanies);
-      renderButtons(globalSortedCompanies);
+      renderCompanies(companiesToRender);
+      renderButtons(companiesToRender);
       handleCurrentPageFocus();
     }
   };
 
   const minusCurrentPage = () => {
+    const companiesToRender = checkRenderArray();
+
     if (currentPage > 1) {
       currentPage--;
-      renderCompanies(globalSortedCompanies);
-      renderButtons(globalSortedCompanies);
+      renderCompanies(companiesToRender);
+      renderButtons(companiesToRender);
       handleCurrentPageFocus();
     }
   };
@@ -261,9 +270,10 @@ const handleCurrentPageFocus = () => {
 };
 
 const handlePageChange = e => {
+  const companiesToRender = checkRenderArray();
   currentPage = Number(e.target.dataset.value);
-  renderCompanies(globalSortedCompanies);
-  renderButtons(globalSortedCompanies);
+  renderCompanies(companiesToRender);
+  renderButtons(companiesToRender);
   handleCurrentPageFocus();
 }; //Render
 
@@ -356,17 +366,20 @@ const handleCompanyClick = e => {
   modalClosingBtn.addEventListener('click', () => {
     document.body.removeChild(modal);
   });
-}; //Filter By Name
+}; //Filter By Name 
 
 
 const filterByName = async () => {
   currentPage = 1;
-  const filteredCompanies = globalSortedCompanies.filter(i => i.name.toLowerCase().includes(filterInput.value.toLowerCase()));
+  const filteredCompanies = globalSortedCompanies.filter(i => i.name.toLowerCase().indexOf(filterInput.value.toLowerCase()) === 0);
   globalFilteredCompanies = filteredCompanies;
   renderButtons(filteredCompanies);
   renderCompanies(filteredCompanies);
-}; //Sort by value
+};
 
+filterInput.addEventListener("input", () => {
+  filterByName();
+}); //Sort by value
 
 const sortByInput = document.querySelector('.sortInput');
 sortByInput.addEventListener('change', e => {
@@ -381,9 +394,6 @@ const bootFunction = async () => {
   const sortedCompanies = globalSortedCompanies || (await sortByParam("totalIncome"));
   renderButtons(sortedCompanies);
   renderCompanies(sortedCompanies);
-  filterInput.addEventListener("input", () => {
-    filterByName();
-  });
 };
 
 bootFunction();
@@ -415,7 +425,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62441" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51558" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

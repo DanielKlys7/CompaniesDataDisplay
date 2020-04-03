@@ -47,7 +47,7 @@ const sortByParam = async (param) => {
       companies.sort((a, b) => (a.totalIncome < b.totalIncome) ? 1 : -1);
       break;
     case "id":
-      companies.sort((a, b) => (Number(a.id) < Number(b.id)) ? -1 : 1);
+      companies.sort((a, b) => (a.id < b.id) ? -1 : 1);
       break;
     case "name":
       companies.sort((a, b) => (a.name < b.name) ? -1 : 1);
@@ -63,9 +63,13 @@ const sortByParam = async (param) => {
   return companies;
 }
 
+const checkRenderArray = () => {
+  if (!filterInput.value) return globalSortedCompanies;
+  return globalFilteredCompanies
+} 
+
 //Pagination
 let pageButtons;
-
 let currentPage = 1;
 const amountOfItemsPerPage = 15;
 
@@ -91,18 +95,20 @@ const renderButtons = (array) => {
     });
   };
   const addCurrentPage = () => {
+    const companiesToRender = checkRenderArray();
     if (currentPage < amountOfPages) {
       currentPage++;
-      renderCompanies(globalSortedCompanies);
-      renderButtons(globalSortedCompanies);
+      renderCompanies(companiesToRender);
+      renderButtons(companiesToRender);
       handleCurrentPageFocus();
     }
   }
   const minusCurrentPage = () => {
+    const companiesToRender = checkRenderArray();
     if (currentPage > 1) {
       currentPage--;
-      renderCompanies(globalSortedCompanies);
-      renderButtons(globalSortedCompanies);
+      renderCompanies(companiesToRender);
+      renderButtons(companiesToRender);
       handleCurrentPageFocus();
     } 
   }
@@ -122,9 +128,10 @@ const handleCurrentPageFocus = () => {
 }
 
 const handlePageChange = (e) => {
+  const companiesToRender = checkRenderArray();
   currentPage = Number(e.target.dataset.value);
-  renderCompanies(globalSortedCompanies);
-  renderButtons(globalSortedCompanies);
+  renderCompanies(companiesToRender);
+  renderButtons(companiesToRender);
   handleCurrentPageFocus();
 }
 
@@ -217,14 +224,19 @@ const handleCompanyClick = (e) => {
     document.body.removeChild(modal);
   })
 }
-//Filter By Name
+//Filter By Name 
 const filterByName = async () => {
   currentPage = 1;
-  const filteredCompanies = globalSortedCompanies.filter((i) => i.name.toLowerCase().includes(filterInput.value.toLowerCase()));
+  const filteredCompanies = globalSortedCompanies.filter((i) => i.name.toLowerCase().indexOf(filterInput.value.toLowerCase()) === 0);
   globalFilteredCompanies = filteredCompanies;
   renderButtons(filteredCompanies);
   renderCompanies(filteredCompanies);
 }
+
+filterInput.addEventListener("input", () => {
+  filterByName();
+})
+
 //Sort by value
 const sortByInput = document.querySelector('.sortInput');
 sortByInput.addEventListener('change', (e) => {
@@ -240,9 +252,6 @@ const bootFunction = async () => {
   const sortedCompanies = (globalSortedCompanies || await sortByParam("totalIncome"));
   renderButtons(sortedCompanies);
   renderCompanies(sortedCompanies);
-  filterInput.addEventListener("input", () => {
-    filterByName();
-  })
 }
     
 

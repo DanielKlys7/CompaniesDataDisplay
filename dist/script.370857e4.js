@@ -359,8 +359,8 @@ const handleCompanyClick = e => {
     const totalIncomeBetweenDates = specificCompanyIncomesBetweenDates.reduce((previous, current) => {
       return previous + Number(current.value);
     }, 0);
-    totalBetweenDatesDisplay.textContent = totalIncomeBetweenDates;
-    averageBetweenDatesDisplay.textContent = totalIncomeBetweenDates / specificCompanyIncomesBetweenDates.length;
+    totalBetweenDatesDisplay.textContent = totalIncomeBetweenDates || 0;
+    averageBetweenDatesDisplay.textContent = totalIncomeBetweenDates / specificCompanyIncomesBetweenDates.length || 0;
   };
 
   betweenDatesHandler.addEventListener('click', () => displayCustomDatesIncomes());
@@ -429,7 +429,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58813" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51936" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

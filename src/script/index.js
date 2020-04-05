@@ -215,8 +215,8 @@ const handleCompanyClick = (e) => {
       return previous + Number(current.value);
     }, 0);
 
-    totalBetweenDatesDisplay.textContent = totalIncomeBetweenDates;
-    averageBetweenDatesDisplay.textContent = totalIncomeBetweenDates / specificCompanyIncomesBetweenDates.length;
+    totalBetweenDatesDisplay.textContent = totalIncomeBetweenDates || 0;
+    averageBetweenDatesDisplay.textContent = totalIncomeBetweenDates / specificCompanyIncomesBetweenDates.length || 0;
   }
 
   betweenDatesHandler.addEventListener('click', () => displayCustomDatesIncomes())

@@ -122,10 +122,9 @@ const table = document.querySelector('.table');
 const wrapper = document.querySelector('.wrapper');
 const tbody = document.querySelector('.table__body');
 const filterInput = document.querySelector('.filterInput');
+const sortInput = document.querySelector('.sortInput');
 const btnsContainers = document.querySelectorAll('.btnsContainer');
-let globalCompanies;
-let globalSortedCompanies;
-let globalFilteredCompanies;
+let globalCompanies, globalSortedCompanies, globalFilteredCompanies;
 
 const fetchCompanies = async () => {
   let response = await fetch(`https://recruitment.hal.skygate.io/companies`);
@@ -191,7 +190,8 @@ const sortByParam = async param => {
 
   globalSortedCompanies = companies;
   return companies;
-};
+}; //If filterInput isn't an empty array return globalFilteredCompanies, else return Sorted
+
 
 const checkArrayToRender = () => {
   if (!filterInput.value) return globalSortedCompanies;
@@ -208,7 +208,8 @@ const renderButtons = array => {
   let buttonElement = "";
 
   for (let i = -1; i <= 2; i++) {
-    if (currentPage + i <= 20 && currentPage + i > 0 && i < amountOfPages) {
+    // not to render more pages than really are, not render less than 1
+    if (currentPage + i <= amountOfPages && currentPage + i > 0 && i < amountOfPages) {
       buttonElement += `<button class="pageButton" data-value=${currentPage + i}>${currentPage + i}</button>`;
     }
   }
@@ -230,30 +231,32 @@ const renderButtons = array => {
 
   ;
 
-  const addCurrentPage = () => {
+  const handlePageChangeViaNextOrPrvsBtns = instruction => {
     const companiesToRender = checkArrayToRender();
 
-    if (currentPage < amountOfPages) {
-      currentPage++;
-      renderCompanies(companiesToRender);
-      renderButtons(companiesToRender);
-      handleCurrentPageFocus();
+    switch (instruction) {
+      case 'minus':
+        if (currentPage > 1) {
+          currentPage--;
+        }
+
+        break;
+
+      case 'plus':
+        if (currentPage < amountOfPages) {
+          currentPage++;
+        }
+
+        break;
     }
+
+    renderCompanies(companiesToRender);
+    renderButtons(companiesToRender);
+    handleCurrentPageFocus();
   };
 
-  const minusCurrentPage = () => {
-    const companiesToRender = checkArrayToRender();
-
-    if (currentPage > 1) {
-      currentPage--;
-      renderCompanies(companiesToRender);
-      renderButtons(companiesToRender);
-      handleCurrentPageFocus();
-    }
-  };
-
-  document.querySelectorAll('.previousPageBtn').forEach(i => i.addEventListener('click', () => minusCurrentPage()));
-  document.querySelectorAll('.nextPageBtn').forEach(i => i.addEventListener('click', () => addCurrentPage()));
+  document.querySelectorAll('.previousPageBtn').forEach(i => i.addEventListener('click', () => handlePageChangeViaNextOrPrvsBtns('minus')));
+  document.querySelectorAll('.nextPageBtn').forEach(i => i.addEventListener('click', () => handlePageChangeViaNextOrPrvsBtns('plus')));
   handleCurrentPageFocus();
 };
 
@@ -398,6 +401,8 @@ const bootFunction = async () => {
   const sortedCompanies = globalSortedCompanies || (await sortByParam("totalIncome"));
   renderButtons(sortedCompanies);
   renderCompanies(sortedCompanies);
+  filterInput.disabled = false;
+  sortInput.disabled = false;
 };
 
 bootFunction();
@@ -429,7 +434,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51936" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50040" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

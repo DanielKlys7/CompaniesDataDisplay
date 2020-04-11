@@ -24,7 +24,7 @@ export const sortByParam = async (param) => {
       [sortedCompanies, filteredCompanies].forEach(i => i.sort((a, b) => (a.city < b.city) ? -1 : 1));
       break;
     default:
-      [sortedCompanies, filteredCompanies].forEach(i => i.sort((a, b) => (a.totalIncome < b.totalIncome) ? -1 : 1));
+      [sortedCompanies, filteredCompanies].forEach(i => i.sort((a, b) => (a.totalIncome < b.totalIncome) ? 1 : -1));
       break;
   }
   handleSaveFilteredCompanies(filteredCompanies);

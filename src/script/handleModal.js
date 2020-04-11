@@ -1,6 +1,5 @@
 import {checkArrayToRender} from './helperFunctions';
 
-const table = document.querySelector('.table');
 const wrapper = document.querySelector('.wrapper');
 
 export const handleCompanyClick = (e) => {

@@ -8,7 +8,7 @@ Companies data display
 
 Project's live is here: [companiesdatadisplay.netlify.com](https://companiesdatadisplay.netlify.com/)
 
-It takes a while for project to load beacuse of multiple fetches (I guess).
+It takes a while for project to load beacuse of multiple fetches (which are essential due to totalIncome sort).
 At the beggining I thought that I would do it in React. Then I was like "react would't really show my vanilla JavaScript skills" so.. It is done fully in pure JavaScript, the only tool I used was parcel bundler for local environment. Had fun doing it!
 
 ## Getting Started
@@ -19,9 +19,9 @@ These instructions will get you a copy of the project up and running on your loc
 
 What things you need to install the software and how to install them
 
-1. node.js
-2. npm
-3. [parcel](https://parceljs.org/) - module bundler
+1. [node.js](https://nodejs.org/en/) - simply download and install it locally on your device.
+2. npm - installed along with node.js
+3. [parcel](https://parceljs.org/) - module bundler contained in dev dependecies.
 
 ### Installing
 

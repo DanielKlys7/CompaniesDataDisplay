@@ -72,7 +72,6 @@ const checkArrayToRender = () => {
 } 
 
 //Pagination
-let pageButtons;
 let currentPage = 1;
 const amountOfItemsPerPage = 15;
 

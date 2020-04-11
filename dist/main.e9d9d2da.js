@@ -321,7 +321,7 @@ const renderCompanies = (array, currentPage, amountOfItemsPerPage, placeOfRender
 };
 
 exports.renderCompanies = renderCompanies;
-},{"./api":"src/script/api.js","./handleModal":"src/script/handleModal.js"}],"src/script/pagionation.js":[function(require,module,exports) {
+},{"./api":"src/script/api.js","./handleModal":"src/script/handleModal.js"}],"src/script/pagination.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -373,14 +373,14 @@ const renderButtons = (array, amountOfItemsPerPage, placesToRender) => {
   }
 
   ;
-  const previousButton = document.querySelector('.previousPageBtn');
-  const nextButton = document.querySelector('.nextPageBtn');
-  previousButton.addEventListener('click', e => {
+  const previousButtons = document.querySelectorAll('.previousPageBtn');
+  const nextButtons = document.querySelectorAll('.nextPageBtn');
+  previousButtons.forEach(i => i.addEventListener('click', e => {
     handlePreviousOrNextPage('previous');
-  });
-  nextButton.addEventListener('click', e => {
+  }));
+  nextButtons.forEach(i => i.addEventListener('click', e => {
     handlePreviousOrNextPage('next');
-  });
+  }));
   handleCurrentPageFocus();
 };
 
@@ -428,7 +428,7 @@ exports.sortByParam = void 0;
 
 var _helperFunctions = require("./helperFunctions");
 
-var _pagionation = require("./pagionation");
+var _pagination = require("./pagination");
 
 var _main = require("./main");
 
@@ -438,53 +438,55 @@ const btnsContainers = document.querySelectorAll('.btnsContainer');
 const tbody = document.querySelector('.table__body');
 
 const sortByParam = async param => {
-  const companies = _helperFunctions.entireCompaniesData || (await (0, _helperFunctions.calculateTotalIncome)());
+  const sortedCompanies = _helperFunctions.entireCompaniesData || (await (0, _helperFunctions.calculateTotalIncome)());
+  const filteredCompanies = _helperFunctions.filteredCompaniesData || [];
 
   switch (param) {
     case "totalIncome":
-      companies.sort((a, b) => a.totalIncome < b.totalIncome ? 1 : -1);
+      [sortedCompanies, filteredCompanies].forEach(i => i.sort((a, b) => a.totalIncome < b.totalIncome ? 1 : -1));
       break;
 
     case "id":
-      companies.sort((a, b) => a.id < b.id ? -1 : 1);
+      [sortedCompanies, filteredCompanies].forEach(i => i.sort((a, b) => a.id < b.id ? -1 : 1));
       break;
 
     case "name":
-      companies.sort((a, b) => a.name < b.name ? -1 : 1);
+      [sortedCompanies, filteredCompanies].forEach(i => i.sort((a, b) => a.name < b.name ? -1 : 1));
       break;
 
     case "city":
-      companies.sort((a, b) => a.city < b.city ? -1 : 1);
+      [sortedCompanies, filteredCompanies].forEach(i => i.sort((a, b) => a.city < b.city ? -1 : 1));
       break;
 
     default:
-      companies.sort((a, b) => a.totalIncome < b.totalIncome ? 1 : -1);
+      [sortedCompanies, filteredCompanies].forEach(i => i.sort((a, b) => a.totalIncome < b.totalIncome ? -1 : 1));
       break;
   }
 
-  (0, _helperFunctions.handleSaveSortedCompanies)(companies);
-  return companies;
+  (0, _helperFunctions.handleSaveFilteredCompanies)(filteredCompanies);
+  (0, _helperFunctions.handleSaveSortedCompanies)(sortedCompanies);
+  return sortedCompanies;
 };
 
 exports.sortByParam = sortByParam;
 sortInput.addEventListener('change', e => {
-  (0, _pagionation.handleCurrentPageChange)(1);
+  (0, _pagination.handleCurrentPageChange)(1);
   sortByParam(e.target.value);
-  (0, _pagionation.renderButtons)((0, _helperFunctions.checkArrayToRender)(), _main.amountOfItemsPerPage, btnsContainers);
-  (0, _helperFunctions.renderCompanies)((0, _helperFunctions.checkArrayToRender)(), _pagionation.currentPage, _main.amountOfItemsPerPage, tbody);
+  (0, _pagination.renderButtons)((0, _helperFunctions.checkArrayToRender)(), _main.amountOfItemsPerPage, btnsContainers);
+  (0, _helperFunctions.renderCompanies)((0, _helperFunctions.checkArrayToRender)(), _pagination.currentPage, _main.amountOfItemsPerPage, tbody);
 });
 
 const filterByName = async () => {
-  (0, _pagionation.handleCurrentPageChange)(1);
+  (0, _pagination.handleCurrentPageChange)(1);
   (0, _helperFunctions.handleSaveFilteredCompanies)(_helperFunctions.entireCompaniesData.filter(i => i.name.toLowerCase().indexOf(filterInput.value.toLowerCase()) === 0));
-  (0, _pagionation.renderButtons)((0, _helperFunctions.checkArrayToRender)(), _main.amountOfItemsPerPage, btnsContainers);
-  (0, _helperFunctions.renderCompanies)((0, _helperFunctions.checkArrayToRender)(), _pagionation.currentPage, _main.amountOfItemsPerPage, tbody);
+  (0, _pagination.renderButtons)((0, _helperFunctions.checkArrayToRender)(), _main.amountOfItemsPerPage, btnsContainers);
+  (0, _helperFunctions.renderCompanies)((0, _helperFunctions.checkArrayToRender)(), _pagination.currentPage, _main.amountOfItemsPerPage, tbody);
 };
 
 filterInput.addEventListener('input', () => {
   filterByName();
 });
-},{"./helperFunctions":"src/script/helperFunctions.js","./pagionation":"src/script/pagionation.js","./main":"src/script/main.js"}],"src/script/main.js":[function(require,module,exports) {
+},{"./helperFunctions":"src/script/helperFunctions.js","./pagination":"src/script/pagination.js","./main":"src/script/main.js"}],"src/script/main.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -496,7 +498,7 @@ var _sortAndInput = require("./sortAndInput");
 
 var _helperFunctions = require("./helperFunctions");
 
-var _pagionation = require("./pagionation");
+var _pagination = require("./pagination");
 
 const tbody = document.querySelector('.table__body');
 const filterInput = document.querySelector('.filterInput');
@@ -508,12 +510,12 @@ exports.amountOfItemsPerPage = amountOfItemsPerPage;
 const bootFunction = async () => {
   await (0, _sortAndInput.sortByParam)();
   (0, _helperFunctions.removeLoaderAndEnableInputs)([filterInput, sortInput]);
-  (0, _pagionation.renderButtons)((0, _helperFunctions.checkArrayToRender)(), amountOfItemsPerPage, btnsContainers);
-  (0, _helperFunctions.renderCompanies)((0, _helperFunctions.checkArrayToRender)(), _pagionation.currentPage, amountOfItemsPerPage, tbody);
+  (0, _pagination.renderButtons)((0, _helperFunctions.checkArrayToRender)(), amountOfItemsPerPage, btnsContainers);
+  (0, _helperFunctions.renderCompanies)((0, _helperFunctions.checkArrayToRender)(), _pagination.currentPage, amountOfItemsPerPage, tbody);
 };
 
 bootFunction();
-},{"./sortAndInput":"src/script/sortAndInput.js","./helperFunctions":"src/script/helperFunctions.js","./pagionation":"src/script/pagionation.js"}],"../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./sortAndInput":"src/script/sortAndInput.js","./helperFunctions":"src/script/helperFunctions.js","./pagination":"src/script/pagination.js"}],"../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -541,7 +543,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63061" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50214" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -717,5 +719,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","src/script/main.js"], null)
+},{}]},{},["../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","src/script/main.js"], null)
 //# sourceMappingURL=/main.e9d9d2da.js.map

@@ -1,6 +1,6 @@
 import {sortByParam} from './sortAndInput';
 import {renderCompanies, checkArrayToRender, removeLoaderAndEnableInputs} from './helperFunctions';
-import {currentPage, renderButtons} from './pagionation';
+import {currentPage, renderButtons} from './pagination';
 
 const tbody = document.querySelector('.table__body');
 const filterInput = document.querySelector('.filterInput');

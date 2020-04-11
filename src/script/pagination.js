@@ -35,16 +35,16 @@ export const renderButtons = (array, amountOfItemsPerPage, placesToRender) => {
     });
   };
 
-  const previousButton = document.querySelector('.previousPageBtn');
-  const nextButton = document.querySelector('.nextPageBtn');
+  const previousButtons = document.querySelectorAll('.previousPageBtn');
+  const nextButtons = document.querySelectorAll('.nextPageBtn');
 
-  previousButton.addEventListener('click', (e) => {
+  previousButtons.forEach(i => i.addEventListener('click', (e) => {
     handlePreviousOrNextPage('previous');
-  })
-  nextButton.addEventListener('click', (e) => {
+  }));
+  nextButtons.forEach(i => i.addEventListener('click', (e) => {
     handlePreviousOrNextPage('next');
-  })
-
+  }));
+  
   handleCurrentPageFocus();
 };
 

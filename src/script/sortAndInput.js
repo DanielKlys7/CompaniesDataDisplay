@@ -1,5 +1,5 @@
 import {handleSaveFilteredCompanies, handleSaveSortedCompanies, entireCompaniesData, calculateTotalIncome, renderCompanies, filteredCompaniesData, checkArrayToRender} from './helperFunctions';
-import {handleCurrentPageChange, currentPage, renderButtons} from './pagionation';
+import {handleCurrentPageChange, currentPage, renderButtons} from './pagination';
 import {amountOfItemsPerPage} from './main';
 
 const filterInput = document.querySelector('.filterInput');
@@ -8,26 +8,28 @@ const btnsContainers = document.querySelectorAll('.btnsContainer');
 const tbody = document.querySelector('.table__body');
 
 export const sortByParam = async (param) => {
-  const companies = (entireCompaniesData || await calculateTotalIncome());
+  const sortedCompanies = (entireCompaniesData || await calculateTotalIncome());
+  const filteredCompanies =  (filteredCompaniesData || []);
   switch (param) {
     case "totalIncome":
-      companies.sort((a, b) => (a.totalIncome < b.totalIncome) ? 1 : -1);
+      [sortedCompanies, filteredCompanies].forEach(i => i.sort((a, b) => (a.totalIncome < b.totalIncome) ? 1 : -1));
       break;
     case "id":
-      companies.sort((a, b) => (a.id < b.id) ? -1 : 1);
+      [sortedCompanies, filteredCompanies].forEach(i => i.sort((a, b) => (a.id < b.id) ? -1 : 1));
       break;
     case "name":
-      companies.sort((a, b) => (a.name < b.name) ? -1 : 1);
+      [sortedCompanies, filteredCompanies].forEach(i => i.sort((a, b) => (a.name < b.name) ? -1 : 1));
       break;
     case "city":
-      companies.sort((a, b) => (a.city < b.city) ? -1 : 1);
+      [sortedCompanies, filteredCompanies].forEach(i => i.sort((a, b) => (a.city < b.city) ? -1 : 1));
       break;
     default:
-      companies.sort((a, b) => (a.totalIncome < b.totalIncome) ? 1 : -1);
+      [sortedCompanies, filteredCompanies].forEach(i => i.sort((a, b) => (a.totalIncome < b.totalIncome) ? -1 : 1));
       break;
   }
-  handleSaveSortedCompanies(companies);
-  return companies;
+  handleSaveFilteredCompanies(filteredCompanies);
+  handleSaveSortedCompanies(sortedCompanies);
+  return sortedCompanies;
 }
 
 sortInput.addEventListener('change', (e) => {

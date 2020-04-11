@@ -35,6 +35,17 @@ export const renderButtons = (array, amountOfItemsPerPage, placesToRender) => {
     });
   };
 
+  const handlePreviousOrNextPage = (instruction) => {
+    const companiesToRender = checkArrayToRender();
+    if (instruction === 'next') {
+      if(currentPage < amountOfPages) currentPage++;
+    } else if (instruction === 'previous') {
+      if(currentPage > 1) currentPage--;
+    };
+    renderCompanies(companiesToRender, currentPage, amountOfItemsPerPage, tbody);
+    renderButtons(companiesToRender, amountOfItemsPerPage, btnsContainers);
+  };
+
   const previousButtons = document.querySelectorAll('.previousPageBtn');
   const nextButtons = document.querySelectorAll('.nextPageBtn');
 
@@ -58,16 +69,6 @@ const handleCurrentPageFocus = () => {
   }
 }
 
-const handlePreviousOrNextPage = (instruction) => {
-  const companiesToRender = checkArrayToRender();
-  if (instruction === 'next') {
-    if(currentPage < amountOfItemsPerPage) currentPage++;
-  } else if (instruction === 'previous') {
-    if(currentPage > 1) currentPage--;
-  };
-  renderCompanies(companiesToRender, currentPage, amountOfItemsPerPage, tbody);
-  renderButtons(companiesToRender, amountOfItemsPerPage, btnsContainers);
-};
 
 const handlePageChange = (e) => {
   const companiesToRender = checkArrayToRender();

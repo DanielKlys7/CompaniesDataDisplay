@@ -373,6 +373,21 @@ const renderButtons = (array, amountOfItemsPerPage, placesToRender) => {
   }
 
   ;
+
+  const handlePreviousOrNextPage = instruction => {
+    const companiesToRender = (0, _helperFunctions.checkArrayToRender)();
+
+    if (instruction === 'next') {
+      if (currentPage < amountOfPages) exports.currentPage = currentPage = currentPage + 1;
+    } else if (instruction === 'previous') {
+      if (currentPage > 1) exports.currentPage = currentPage = currentPage - 1;
+    }
+
+    ;
+    (0, _helperFunctions.renderCompanies)(companiesToRender, currentPage, amountOfItemsPerPage, tbody);
+    renderButtons(companiesToRender, amountOfItemsPerPage, btnsContainers);
+  };
+
   const previousButtons = document.querySelectorAll('.previousPageBtn');
   const nextButtons = document.querySelectorAll('.nextPageBtn');
   previousButtons.forEach(i => i.addEventListener('click', e => {
@@ -396,20 +411,6 @@ const handleCurrentPageFocus = () => {
       singleButton.classList.add('currentPage');
     }
   }
-};
-
-const handlePreviousOrNextPage = instruction => {
-  const companiesToRender = (0, _helperFunctions.checkArrayToRender)();
-
-  if (instruction === 'next') {
-    if (currentPage < _main.amountOfItemsPerPage) exports.currentPage = currentPage = currentPage + 1;
-  } else if (instruction === 'previous') {
-    if (currentPage > 1) exports.currentPage = currentPage = currentPage - 1;
-  }
-
-  ;
-  (0, _helperFunctions.renderCompanies)(companiesToRender, currentPage, _main.amountOfItemsPerPage, tbody);
-  renderButtons(companiesToRender, _main.amountOfItemsPerPage, btnsContainers);
 };
 
 const handlePageChange = e => {
@@ -543,7 +544,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50214" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50503" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

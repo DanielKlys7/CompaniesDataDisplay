@@ -18,7 +18,7 @@ const bootFunction = async () => {
 
   setTimeout(() => {
     bootFunction();
-  }, 3000);
+  }, 60000);
 }
 
 bootFunction();

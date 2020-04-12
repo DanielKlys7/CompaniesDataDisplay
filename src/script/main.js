@@ -10,10 +10,16 @@ const btnsContainers = document.querySelectorAll('.btnsContainer');
 export const amountOfItemsPerPage = 15;
 
 const bootFunction = async () => {
+  console.log('happens')
   await sortByParam();
   removeLoaderAndEnableInputs([filterInput, sortInput]);
   renderButtons(checkArrayToRender(), amountOfItemsPerPage, btnsContainers);
   renderCompanies(checkArrayToRender(), currentPage, amountOfItemsPerPage, tbody);
+
+  setTimeout(() => {
+    bootFunction();
+  }, 3000);
 }
 
 bootFunction();
+

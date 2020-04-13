@@ -1,4 +1,4 @@
-import {fetchData, fetchIncomes} from './api';
+import {fetchData} from './api';
 import {handleCompanyClick} from './handleModal';
 
 const filterInput = document.querySelector('.filterInput');

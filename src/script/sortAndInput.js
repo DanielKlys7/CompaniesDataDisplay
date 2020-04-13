@@ -1,6 +1,5 @@
 import {handleSaveFilteredCompanies, handleSaveSortedCompanies, entireCompaniesData, calculateTotalIncome, renderCompanies, filteredCompaniesData, checkArrayToRender} from './helperFunctions';
-import {handleCurrentPageChange, currentPage, renderButtons} from './pagination';
-import {amountOfItemsPerPage} from './main';
+import {handleCurrentPageChange, amountOfItemsPerPage, currentPage, renderButtons} from './pagination';
 
 const filterInput = document.querySelector('.filterInput');
 const sortInput = document.querySelector('.sortInput');

@@ -1,9 +1,9 @@
 import {checkArrayToRender, renderCompanies} from './helperFunctions';
-import {amountOfItemsPerPage} from './main';
 
 const tbody = document.querySelector('.table__body');
 const btnsContainers = document.querySelectorAll('.btnsContainer');
 
+export const amountOfItemsPerPage = 15;
 export let currentPage = 1;
 
 export const handleCurrentPageChange = (value) => {

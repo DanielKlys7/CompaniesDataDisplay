@@ -1,4 +1,4 @@
-import {fetchCompanies, fetchIncomes} from './api';
+import {fetchData, fetchIncomes} from './api';
 import {handleCompanyClick} from './handleModal';
 
 const filterInput = document.querySelector('.filterInput');
@@ -23,9 +23,9 @@ export const checkArrayToRender = () => {
 };
 
 const mergeFetchObjects = async () => {
-  let fetchedCompanies = await fetchCompanies();
+  let fetchedCompanies = await fetchData(`https://recruitment.hal.skygate.io/companies`);
   for (let company of fetchedCompanies) {
-    const fetchedIncomes = await fetchIncomes(company.id);
+    const fetchedIncomes = await fetchData(`https://recruitment.hal.skygate.io/incomes/${company.id}`);
     company.incomes = await fetchedIncomes.incomes;
   }
   return(fetchedCompanies);

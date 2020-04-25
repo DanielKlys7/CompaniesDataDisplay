@@ -1,4 +1,6 @@
-import {checkArrayToRender} from './helperFunctions';
+import {
+  checkArrayToRender
+} from './helperFunctions';
 
 const wrapper = document.querySelector('.wrapper');
 
@@ -8,7 +10,7 @@ export const handleCompanyClick = (e) => {
   let specificCompany;
 
   for (let company of checkArrayToRender()) {
-    if(Number(e.target.parentNode.dataset.key) === company.id) {
+    if (Number(e.target.parentNode.dataset.key) === company.id) {
       specificCompany = company;
     };
   };

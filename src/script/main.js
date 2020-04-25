@@ -1,6 +1,16 @@
-import {sortByParam} from './sortAndInput';
-import {renderCompanies, checkArrayToRender, removeLoaderAndEnableInputs} from './helperFunctions';
-import {currentPage, amountOfItemsPerPage, renderButtons} from './pagination';
+import {
+  sortByParam
+} from './sortAndInput';
+import {
+  renderCompanies,
+  checkArrayToRender,
+  removeLoaderAndEnableInputs
+} from './helperFunctions';
+import {
+  currentPage,
+  amountOfItemsPerPage,
+  renderButtons
+} from './pagination';
 
 const tbody = document.querySelector('.table__body');
 const filterInput = document.querySelector('.filterInput');
@@ -19,4 +29,3 @@ const bootFunction = async () => {
 }
 
 bootFunction();
-

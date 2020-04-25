@@ -1,38 +1,38 @@
-import {fetchData} from './api';
-import {handleCompanyClick} from './handleModal';
+import {
+  fetchData
+} from './api';
+import {
+  handleCompanyClick
+} from './handleModal';
 
 const filterInput = document.querySelector('.filterInput');
 
 export let entireCompaniesData;
 export let filteredCompaniesData;
 
-export const handleSaveFilteredCompanies = (arrayToSaveAsFilteredCompaniesData) => {
-  filteredCompaniesData = arrayToSaveAsFilteredCompaniesData;
+export const saveFilteredCompanies = (arrayToSaveAsVariable) => {
+  filteredCompaniesData = arrayToSaveAsVariable;
 }
 
-export const handleSaveSortedCompanies = (arrayToSaveAsEntireCompaniesData) => {
-  entireCompaniesData = arrayToSaveAsEntireCompaniesData;
+export const saveSortedCompanies = (arrayToSaveAsVariable) => {
+  entireCompaniesData = arrayToSaveAsVariable;
 }
 
 export const checkArrayToRender = () => {
-  if(filterInput.value) {
-    return filteredCompaniesData;
-  } else {
-    return entireCompaniesData;
-  }
+  return filterInput.value ? filteredCompaniesData : entireCompaniesData;
 };
 
-const mergeFetchObjects = async () => {
-  let fetchedCompanies = await fetchData(`https://recruitment.hal.skygate.io/companies`);
-  for (let company of fetchedCompanies) {
+const createCompaniesWithIncomes = async () => {
+  let companies = await fetchData(`https://recruitment.hal.skygate.io/companies`);
+  for (let company of companies) {
     const fetchedIncomes = await fetchData(`https://recruitment.hal.skygate.io/incomes/${company.id}`);
     company.incomes = await fetchedIncomes.incomes;
   }
-  return(fetchedCompanies);
+  return (companies);
 }
 
 export const calculateTotalIncome = async () => {
-  const companiesWithIncomesArray = await mergeFetchObjects();
+  const companiesWithIncomesArray = await createCompaniesWithIncomes();
   for (let company of companiesWithIncomesArray) {
     company.totalIncome = company.incomes.reduce((previous, current) => {
       return previous + Number(current.value);
@@ -62,6 +62,8 @@ export const renderCompanies = (array, currentPage, amountOfItemsPerPage, placeO
 
   const companiesRows = document.querySelectorAll('.body__company');
   for (let companyRow of companiesRows) {
-    companyRow.addEventListener('click', (e) => {handleCompanyClick(e)})
+    companyRow.addEventListener('click', (e) => {
+      handleCompanyClick(e)
+    })
   };
 }

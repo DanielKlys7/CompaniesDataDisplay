@@ -1,5 +1,18 @@
-import {handleSaveFilteredCompanies, handleSaveSortedCompanies, entireCompaniesData, calculateTotalIncome, renderCompanies, filteredCompaniesData, checkArrayToRender} from './helperFunctions';
-import {handleCurrentPageChange, amountOfItemsPerPage, currentPage, renderButtons} from './pagination';
+import {
+  saveFilteredCompanies,
+  saveSortedCompanies,
+  entireCompaniesData,
+  calculateTotalIncome,
+  renderCompanies,
+  filteredCompaniesData,
+  checkArrayToRender
+} from './helperFunctions';
+import {
+  handleCurrentPageChange,
+  amountOfItemsPerPage,
+  currentPage,
+  renderButtons
+} from './pagination';
 
 const filterInput = document.querySelector('.filterInput');
 const sortInput = document.querySelector('.sortInput');
@@ -8,7 +21,7 @@ const tbody = document.querySelector('.table__body');
 
 export const sortByParam = async (param) => {
   const sortedCompanies = (entireCompaniesData || await calculateTotalIncome());
-  const filteredCompanies =  (filteredCompaniesData || []);
+  const filteredCompanies = (filteredCompaniesData || []);
   switch (param) {
     case "totalIncome":
       [sortedCompanies, filteredCompanies].forEach(i => i.sort((a, b) => (a.totalIncome < b.totalIncome) ? 1 : -1));
@@ -26,13 +39,13 @@ export const sortByParam = async (param) => {
       [sortedCompanies, filteredCompanies].forEach(i => i.sort((a, b) => (a.totalIncome < b.totalIncome) ? 1 : -1));
       break;
   }
-  handleSaveFilteredCompanies(filteredCompanies);
-  handleSaveSortedCompanies(sortedCompanies);
+  saveFilteredCompanies(filteredCompanies);
+  saveSortedCompanies(sortedCompanies);
   return sortedCompanies;
 }
 
 sortInput.addEventListener('change', (e) => {
-  handleCurrentPageChange(1); 
+  handleCurrentPageChange(1);
   sortByParam(e.target.value);
   renderButtons(checkArrayToRender(), amountOfItemsPerPage, btnsContainers);
   renderCompanies(checkArrayToRender(), currentPage, amountOfItemsPerPage, tbody);
@@ -40,7 +53,7 @@ sortInput.addEventListener('change', (e) => {
 
 const filterByName = async () => {
   handleCurrentPageChange(1);
-  handleSaveFilteredCompanies(entireCompaniesData.filter((i) => i.name.toLowerCase().indexOf(filterInput.value.toLowerCase()) === 0));
+  saveFilteredCompanies(entireCompaniesData.filter((i) => i.name.toLowerCase().indexOf(filterInput.value.toLowerCase()) === 0));
   renderButtons(checkArrayToRender(), amountOfItemsPerPage, btnsContainers);
   renderCompanies(checkArrayToRender(), currentPage, amountOfItemsPerPage, tbody);
 }

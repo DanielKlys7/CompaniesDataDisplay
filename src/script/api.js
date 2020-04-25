@@ -1,13 +1,10 @@
 export const fetchData = async (apiEndpoint) => {
   try {
-    let response = await fetch(apiEndpoint);
-    let data = await response.json();
-    return data;
+    const response = await fetch(apiEndpoint);
+    const jsonData = await response.json();
+    return jsonData;
   } catch (err) {
     console.log(err);
     return [];
   }
 };
-
-
-

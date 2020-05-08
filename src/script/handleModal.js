@@ -6,7 +6,6 @@ const wrapper = document.querySelector('.wrapper');
 
 export const handleCompanyClick = (e) => {
   wrapper.classList.add('notClickable');
-
   let specificCompany;
 
   for (let company of checkArrayToRender()) {

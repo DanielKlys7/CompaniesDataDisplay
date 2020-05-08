@@ -1,81 +1,81 @@
-import {
-  checkArrayToRender,
-  renderCompanies
-} from './helperFunctions';
+import { handleActualPageIdx } from "./main";
 
-const tbody = document.querySelector('.table__body');
-const btnsContainers = document.querySelectorAll('.btnsContainer');
-
-export const amountOfItemsPerPage = 15;
-export let currentPage = 1;
-
-export const handleCurrentPageChange = (value) => {
-  currentPage = value;
-}
-
-export const renderButtons = (array, amountOfItemsPerPage, placesToRender) => {
-  const amountOfPages = Math.ceil(array.length / amountOfItemsPerPage);
-
-  let buttonElement = "";
-  for (let i = -1; i <= 2; i++) {
-    if ((currentPage + i <= amountOfPages) && (currentPage + i > 0) && (i < amountOfPages)) {
-      buttonElement += `<button class="pageButton" data-value=${currentPage + i}>${currentPage+ i}</button>`;
-    };
-  };
-
-  placesToRender.forEach(btnContainer => btnContainer.innerHTML = `
-    <button class="pageButton" data-value="1">first</button>
-    <button class="previousPageBtn">&#8592; previous</button>
-    ${buttonElement}
-    <button class="nextPageBtn">next &#8594;</button>
-    <button class="pageButton" data-value=${amountOfPages}>last</button>
-  `);
-
-  const pageButtons = document.querySelectorAll('.pageButton');
-  for (let button of pageButtons) {
-    button.addEventListener("click", (e) => {
-      handlePageChange(e);
-    });
-  };
-
-  const handlePreviousOrNextPage = (instruction) => {
-    const companiesToRender = checkArrayToRender();
-    if (instruction === 'next') {
-      if (currentPage < amountOfPages) currentPage++;
-    } else if (instruction === 'previous') {
-      if (currentPage > 1) currentPage--;
-    };
-    renderCompanies(companiesToRender, currentPage, amountOfItemsPerPage, tbody);
-    renderButtons(companiesToRender, amountOfItemsPerPage, btnsContainers);
-  };
-
-  const previousButtons = document.querySelectorAll('.previousPageBtn');
-  const nextButtons = document.querySelectorAll('.nextPageBtn');
-
-  previousButtons.forEach(i => i.addEventListener('click', (e) => {
-    handlePreviousOrNextPage('previous');
-  }));
-  nextButtons.forEach(i => i.addEventListener('click', (e) => {
-    handlePreviousOrNextPage('next');
-  }));
-
-  handleCurrentPageFocus();
+const checkIfArray = (array) => {
+  if (Array.isArray(array)) {
+    return true;
+  } else {
+    console.error(`parameter is not an array`);
+    return false;
+  }
 };
 
-const handleCurrentPageFocus = () => {
-  const buttons = document.querySelectorAll('.pageButton');
-  for (let singleButton of buttons) {
-    singleButton.classList.remove('currentPage')
-    if (currentPage === Number(singleButton.dataset.value)) {
-      singleButton.classList.add('currentPage')
+const checkIfObject = (settings) => {
+  const typeOfSettings = typeof settings;
+  const isVariableAnArray = Array.isArray(settings);
+  if (typeOfSettings === "object" && isVariableAnArray === false) {
+    return true;
+  } else {
+    console.error("settings is not an object");
+    return false;
+  }
+};
+
+const checkSettingsProperties = (settings) => {
+  const DoesActualPageIdxExist = settings.hasOwnProperty("actualPageIdx");
+  const DoesEntriesOnPageExist = settings.hasOwnProperty("entriesOnPage");
+
+  if (DoesActualPageIdxExist && DoesEntriesOnPageExist) {
+    for (const property in settings) {
+      const isNumber =
+        typeof settings[property] === "number" && settings[property] >= 0
+          ? true
+          : false;
+      if (!isNumber) {
+        throw new Error(`${property} is not number or is not >= 0`);
+      }
+    }
+  } else {
+    throw new Error("settings doesn't have one of neccesary properties");
+  }
+  return true;
+};
+
+export const paginateArray = (dataEntries, settings) => {
+  if (!checkIfArray(dataEntries)) {
+    return;
+  }
+  if (!checkIfObject(settings)) {
+    return;
+  }
+  if (!checkSettingsProperties(settings)) {
+    return;
+  }
+
+  const { actualPageIdx, entriesOnPage } = settings;
+  return dataEntries.slice(
+    actualPageIdx * entriesOnPage - entriesOnPage,
+    actualPageIdx * entriesOnPage
+  );
+};
+
+export const handlePageChange = (value) => {
+  handleActualPageIdx(value);
+};
+
+export const handlePreviousOrNextPage = (
+  instruction,
+  settings,
+  arrayOfFullItems
+) => {
+  const { actualPageIdx, entriesOnPage } = settings;
+
+  if (instruction === "next") {
+    if (actualPageIdx < Math.ceil(arrayOfFullItems.length / entriesOnPage)) {
+      handleActualPageIdx(settings.actualPageIdx + 1);
+    }
+  } else if (instruction === "previous") {
+    if (actualPageIdx > 1) {
+      handleActualPageIdx(settings.actualPageIdx - 1);
     }
   }
-}
-
-
-const handlePageChange = (e) => {
-  const companiesToRender = checkArrayToRender();
-  currentPage = Number(e.target.dataset.value);
-  renderCompanies(companiesToRender, currentPage, amountOfItemsPerPage, tbody);
-  renderButtons(companiesToRender, amountOfItemsPerPage, btnsContainers);
 };

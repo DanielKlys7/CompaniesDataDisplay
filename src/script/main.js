@@ -1,31 +1,22 @@
-import {
-  sortByParam
-} from './sortAndInput';
-import {
-  renderCompanies,
-  checkArrayToRender,
-  removeLoaderAndEnableInputs
-} from './helperFunctions';
-import {
-  currentPage,
-  amountOfItemsPerPage,
-  renderButtons
-} from './pagination';
+import { sortByParam } from "./sortAndInput";
+import { renderApp } from "./render";
 
-const tbody = document.querySelector('.table__body');
-const filterInput = document.querySelector('.filterInput');
-const sortInput = document.querySelector('.sortInput');
-const btnsContainers = document.querySelectorAll('.btnsContainer');
+export const settings = {
+  actualPageIdx: 1,
+  entriesOnPage: 15,
+};
+
+export const handleActualPageIdx = (value) => {
+  settings.actualPageIdx = value;
+};
 
 const bootFunction = async () => {
   await sortByParam();
-  removeLoaderAndEnableInputs([filterInput, sortInput]);
-  renderButtons(checkArrayToRender(), amountOfItemsPerPage, btnsContainers);
-  renderCompanies(checkArrayToRender(), currentPage, amountOfItemsPerPage, tbody);
+  renderApp();
 
   setTimeout(() => {
     bootFunction();
   }, 60000);
-}
+};
 
 bootFunction();

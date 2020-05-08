@@ -5,6 +5,7 @@ import {
   handlePreviousOrNextPage,
 } from "./pagination";
 import { settings } from "./main";
+import { handleCompanyClick } from "./handleModal";
 
 const filterInput = document.querySelector(".filterInput");
 const sortInput = document.querySelector(".sortInput");
@@ -77,7 +78,7 @@ const handleEvents = () => {
 
   for (let companyRow of companiesRows) {
     companyRow.addEventListener("click", (e) => {
-      // handleCompanyClick(e);
+      handleCompanyClick(e);
     });
   }
 

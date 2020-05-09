@@ -40,3 +40,11 @@ export const sortByParam = async (param) => {
   saveSortedCompanies(sortedCompanies);
   return sortedCompanies;
 };
+
+export const filterByName = async (input) => {
+  saveFilteredCompanies(
+    entireCompaniesData.filter(
+      (i) => i.name.toLowerCase().indexOf(input.value.toLowerCase()) === 0
+    )
+  );
+};

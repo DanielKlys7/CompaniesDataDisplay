@@ -6,8 +6,9 @@ import {
 } from "./pagination";
 import { settings } from "./main";
 import { handleCompanyClick } from "./handleModal";
+import { sortByParam, filterByName } from "./sortAndInput";
 
-const filterInput = document.querySelector(".filterInput");
+export const filterInput = document.querySelector(".filterInput");
 const sortInput = document.querySelector(".sortInput");
 const tbody = document.querySelector(".table__body");
 const btnsContainers = document.querySelectorAll(".btnsContainer");
@@ -102,6 +103,18 @@ const handleEvents = () => {
       renderApp();
     })
   );
+
+  sortInput.addEventListener("change", (e) => {
+    handlePageChange(1);
+    sortByParam(e.target.value);
+    renderApp();
+  });
+
+  filterInput.addEventListener("input", () => {
+    handlePageChange(1);
+    filterByName(filterInput);
+    renderApp();
+  });
 };
 
 const handleCurrentPageFocus = (currentPage) => {

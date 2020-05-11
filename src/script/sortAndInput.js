@@ -1,10 +1,4 @@
-import {
-  calculateTotalIncome,
-  entireCompaniesData,
-  filteredCompaniesData,
-  saveFilteredCompanies,
-  saveSortedCompanies,
-} from "./helperFunctions";
+import { calculateTotalIncome, entireCompaniesData, filteredCompaniesData, saveFilteredCompanies, saveSortedCompanies, } from "./helperFunctions";
 
 export const sortByParam = async (param) => {
   const sortedCompanies = entireCompaniesData || (await calculateTotalIncome());

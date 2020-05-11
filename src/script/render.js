@@ -1,9 +1,5 @@
 import { checkArrayToRender } from "./helperFunctions";
-import {
-  paginateArray,
-  handlePageChange,
-  handlePreviousOrNextPage,
-} from "./pagination";
+import { paginateArray, handlePageChange, handlePreviousOrNextPage } from "./pagination";
 import { settings } from "./main";
 import { handleCompanyClick } from "./handleModal";
 import { sortByParam, filterByName } from "./sortAndInput";
@@ -20,54 +16,35 @@ const removeLoaderAndEnableInputs = () => {
 };
 
 const renderCompanies = (arrayToRender) => {
-  const companiesIntoElements = arrayToRender
-    .map(
-      (company) =>
-        `<tr class="body__company company" data-key=${company.id}>
+  const companiesIntoElements = arrayToRender.map((company) => `
+    <tr class="body__company company" data-key=${company.id}>
       <td class="company__id">${company.id}</td>
       <td class="company__name">${company.name}</td>
       <td class="company__city">${company.city}</td>
       <td class="company__totalIncome">${company.totalIncome.toFixed(2)}</td>
-    </tr>`
-    )
+    </tr>
+  `)
     .join("");
   tbody.innerHTML = companiesIntoElements;
-
-  const companiesRows = document.querySelectorAll(".body__company");
-  for (let companyRow of companiesRows) {
-    companyRow.addEventListener("click", (e) => {
-      // handleCompanyClick(e);
-    });
-  }
 };
 
 const renderButtons = (arrayOfFullItems, amountOfItemsPerPage, currentPage) => {
-  const amountOfPages = Math.ceil(
-    arrayOfFullItems.length / amountOfItemsPerPage
-  );
+  const amountOfPages = Math.ceil(arrayOfFullItems.length / amountOfItemsPerPage);
 
   let buttonElement = "";
   for (let i = -1; i <= 2; i++) {
-    if (
-      currentPage + i <= amountOfPages &&
-      currentPage + i > 0 &&
-      i < amountOfPages
-    ) {
-      buttonElement += `<button class="pageButton" data-value=${
-        currentPage + i
-      }>${currentPage + i}</button>`;
+    if (currentPage + i <= amountOfPages && currentPage + i > 0 && i < amountOfPages) {
+      buttonElement += `<button class="pageButton" data-value=${currentPage + i}>${currentPage + i}</button>`;
     }
   }
 
-  btnsContainers.forEach(
-    (btnContainer) =>
-      (btnContainer.innerHTML = `
-    <button class="pageButton" data-value="1">first</button>
-    <button class="previousPageBtn">&#8592; previous</button>
-    ${buttonElement}
-    <button class="nextPageBtn">next &#8594;</button>
-    <button class="pageButton" data-value=${amountOfPages}>last</button>
-  `)
+  btnsContainers.forEach((btnContainer) => (btnContainer.innerHTML = `
+      <button class="pageButton" data-value="1">first</button>
+      <button class="previousPageBtn">&#8592; previous</button>
+      ${buttonElement}
+      <button class="nextPageBtn">next &#8594;</button>
+      <button class="pageButton" data-value=${amountOfPages}>last</button>
+    `)
   );
 };
 
@@ -91,14 +68,14 @@ const handleEvents = () => {
   }
 
   previousButtons.forEach((i) =>
-    i.addEventListener("click", (e) => {
+    i.addEventListener("click", () => {
       handlePreviousOrNextPage("previous", settings, checkArrayToRender());
       renderApp();
     })
   );
 
   nextButtons.forEach((i) =>
-    i.addEventListener("click", (e) => {
+    i.addEventListener("click", () => {
       handlePreviousOrNextPage("next", settings, checkArrayToRender());
       renderApp();
     })

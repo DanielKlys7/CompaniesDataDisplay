@@ -4,7 +4,6 @@ export const fetchData = async (apiEndpoint) => {
     const jsonData = await response.json();
     return jsonData;
   } catch (err) {
-    console.log(err);
-    return [];
+    throw Error(err);
   }
 };

@@ -14,9 +14,7 @@ const bootFunction = async () => {
   await sortByParam();
   renderApp();
 
-  setTimeout(() => {
-    bootFunction();
-  }, 60000);
+
 };
 
 bootFunction();

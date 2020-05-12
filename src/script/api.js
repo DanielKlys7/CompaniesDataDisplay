@@ -1,3 +1,5 @@
+import 'regenerator-runtime/runtime';
+
 export const fetchData = async (apiEndpoint) => {
   try {
     const response = await fetch(apiEndpoint);

@@ -9,6 +9,18 @@ const sortInput = document.querySelector(".sortInput");
 const tbody = document.querySelector(".table__body");
 const btnsContainers = document.querySelectorAll(".btnsContainer");
 
+sortInput.addEventListener("change", (e) => {
+  handlePageChange(1);
+  sortByParam(e.target.value);
+  renderApp();
+});
+
+filterInput.addEventListener("input", () => {
+  handlePageChange(1);
+  filterByName(filterInput);
+  renderApp();
+});
+
 const removeLoaderAndEnableInputs = () => {
   const loader = document.querySelector(".loader");
   if (loader) loader.parentNode.removeChild(loader);
@@ -80,18 +92,6 @@ const handleEvents = () => {
       renderApp();
     })
   );
-
-  sortInput.addEventListener("change", (e) => {
-    handlePageChange(1);
-    sortByParam(e.target.value);
-    renderApp();
-  });
-
-  filterInput.addEventListener("input", () => {
-    handlePageChange(1);
-    filterByName(filterInput);
-    renderApp();
-  });
 };
 
 const handleCurrentPageFocus = (currentPage) => {

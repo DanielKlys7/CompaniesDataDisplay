@@ -16,10 +16,9 @@
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11"
   },
-  "browserslist": [
-    "last 1 Chrome version"
-  ],
+  "browserslist": [],
   "dependencies": {
-    "@babel/runtime": "^7.9.2"
+    "@babel/runtime": "^7.9.2",
+    "regenerator": "^0.14.4"
   }
 }

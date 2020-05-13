@@ -1,5 +1,7 @@
 import 'regenerator-runtime/runtime';
-import * as firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/app';
+import 'firebase/firestore';
 import dotenv from 'dotenv'
 dotenv.config();
 
@@ -16,7 +18,6 @@ const db = firebase.firestore();
 
 export const updateFirebaseCollection = (arrayOfItems) => {
   arrayOfItems.forEach(item => {
-    console.log(item);
     db.collection('companies').doc(`${item.id}`).set({
       id: item.id,
       name: item.name,

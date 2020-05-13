@@ -4,8 +4,7 @@ const checkIfArray = (array) => {
   if (Array.isArray(array)) {
     return true;
   } else {
-    console.error(`parameter is not an array`);
-    return false;
+    throw new Error(`parameter is not an array`);
   }
 };
 
@@ -15,8 +14,7 @@ const checkIfObject = (settings) => {
   if (typeOfSettings === "object" && isVariableAnArray === false) {
     return true;
   } else {
-    console.error("settings is not an object");
-    return false;
+    throw new Error("settings is not an object");
   }
 };
 

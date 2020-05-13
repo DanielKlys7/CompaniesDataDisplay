@@ -8,8 +8,7 @@ Companies data display
 
 Project's live is here: [companiesdatadisplay.netlify.com](https://companiesdatadisplay.netlify.com/)
 
-It takes a while for project to load beacuse of multiple fetches (which are essential due to totalIncome sort).
-At the beggining I thought that I would do it in React. Then I was like "react would't really show my vanilla JavaScript skills" so.. It is done fully in pure JavaScript, the only tool I used was parcel bundler for local environment. Had fun doing it!
+While it took about 7sec to load due to multiple data fetches I decided to put this data in google firebase and update it every time sbd uses it. Now you don't need to wait so long for data to load. :)
 
 ## Getting Started
 
@@ -22,13 +21,15 @@ What things you need to install the software and how to install them
 1. [node.js](https://nodejs.org/en/) - simply download and install it locally on your device.
 2. npm - installed along with node.js
 3. [parcel](https://parceljs.org/) - module bundler contained in dev dependecies.
+4. You got to have your own google firebase with init object, that has collection 'companies';
 
 ### Installing
 
 1. open directory from your console
-2. type parcel index.html
-3. wait a while
-3. your dev environment is up and running
+2. change firebase init object to your own in firebaseHandler.js
+3. type parcel index.html
+4. wait a while
+5. your dev environment is up and running
 
 ## Deployment
 

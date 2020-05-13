@@ -1,4 +1,6 @@
 import { fetchData } from "./api";
+import { sortByParam } from './sortAndInput';
+import { updateFirebaseCollection } from './firebaseHandler'
 
 const filterInput = document.querySelector(".filterInput");
 
@@ -39,3 +41,12 @@ export const calculateTotalIncome = async () => {
   entireCompaniesData = companiesWithIncomesArray;
   return companiesWithIncomesArray;
 };
+
+export const getDataForTheFirstTime = async () => {
+  return await sortByParam()
+}
+
+export const updateDataInFirebase = async () => {
+  const companies = await calculateTotalIncome();
+  updateFirebaseCollection(companies);
+}

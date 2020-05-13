@@ -1,7 +1,8 @@
-import { calculateTotalIncome, entireCompaniesData, filteredCompaniesData, saveFilteredCompanies, saveSortedCompanies, } from "./helperFunctions";
+import { entireCompaniesData, filteredCompaniesData, saveFilteredCompanies, saveSortedCompanies, } from "./helperFunctions";
+import { getFirebaseCollection } from './firebaseHandler';
 
 export const sortByParam = async (param) => {
-  const sortedCompanies = entireCompaniesData || (await calculateTotalIncome());
+  const sortedCompanies = entireCompaniesData || (await getFirebaseCollection());
   const filteredCompanies = filteredCompaniesData || [];
   switch (param) {
     case "totalIncome":

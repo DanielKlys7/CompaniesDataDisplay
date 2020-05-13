@@ -1,4 +1,4 @@
-import { sortByParam } from "./sortAndInput";
+import { getDataForTheFirstTime, updateDataInFirebase } from "./helperFunctions";
 import { renderApp } from "./render";
 
 export const settings = {
@@ -11,10 +11,10 @@ export const handleActualPageIdx = (value) => {
 };
 
 const bootFunction = async () => {
-  await sortByParam();
+  await getDataForTheFirstTime();
   renderApp();
 
-
+  updateDataInFirebase();
 };
 
 bootFunction();

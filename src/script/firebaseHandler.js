@@ -12,11 +12,11 @@ const app = firebase.initializeApp({
   messagingSenderId: "774587025538",
   appId: "1:774587025538:web:b3fa122cd4181970fd0c9b"
 });
-
 const db = firebase.firestore();
 
 export const updateFirebaseCollection = (arrayOfItems) => {
   arrayOfItems.forEach(item => {
+    console.log(item);
     db.collection('companies').doc(`${item.id}`).set({
       id: item.id,
       name: item.name,

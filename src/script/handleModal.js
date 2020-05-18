@@ -1,4 +1,5 @@
 import { checkArrayToRender } from "./helperFunctions";
+import 'chart.js';
 
 const wrapper = document.querySelector(".wrapper");
 
@@ -36,11 +37,11 @@ const renderModal = (specificCompany) => {
       <p class="basicData__name">name: ${specificCompany.name}</p>
       <p class="basicData__city">city: ${specificCompany.city}</p>
       <p class="basicData__totalIncome">total income: ${
-        specificCompany.totalIncome
-      }</p>
+    specificCompany.totalIncome
+    }</p>
       <p class="basicData__averageIncome">average income: ${
-        specificCompany.totalIncome / specificCompany.incomes.length
-      }</p>
+    specificCompany.totalIncome / specificCompany.incomes.length
+    }</p>
       <p class="basicData__lastMonthTotal">Last month total income: ${lastMonthTotalIncome}</p>
     </div>
     <div class="datePickers">
@@ -54,11 +55,63 @@ const renderModal = (specificCompany) => {
       <p>total income between dates: <span class="totalBetweenDatesDisplay">0</span></p>
       <p>average income between dates: <span class="averageBetweenDatesDisplay">0</span></p>
     </div>
+    <canvas id="myChart" width=260" height="60"></canvas>
     <button class="modalClosingBtn">OK!</button>
   </div>
   `;
 
+  const sortedArrayOfIncomes = specificCompany.incomes.sort((a, b) => Date.parse(a.date) - Date.parse(b.date));
+
+  const getArrayOfDates = (specificCompany) => {
+    return specificCompany.reduce((total, current) => {
+      const date = new Date(current.date);
+      const day = date.getDate() >= 10 ? date.getDate() : `0${date.getDate()}`;
+      const month = date.getMonth() >= 10 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`;
+      const year = date.getFullYear();
+      total.push(`${year}.${month}.${day}`);
+      return total;
+    }, [])
+  };
+
+  const getArrayOfValues = (specificCompany) => {
+    return specificCompany.reduce((total, current) => {
+      total.push(current.value);
+      return total;
+    }, [])
+  };
+
+  const arrayOfDates = getArrayOfDates(sortedArrayOfIncomes);
+  const arrayOfValues = getArrayOfValues(sortedArrayOfIncomes);
+
   wrapper.insertAdjacentHTML("afterend", modalTemplate);
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: [...arrayOfDates],
+      datasets: [{
+        label: 'value of transaction',
+        data: [...arrayOfValues],
+        backgroundColor: [
+          'rgba(245, 176, 66, 1)',
+        ],
+        borderColor: [
+          'rgba(112,112,112, 1)',
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
+
 };
 
 const displayCustomDatesIncomes = (specificCompany) => {

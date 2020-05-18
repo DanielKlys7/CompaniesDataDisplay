@@ -65,8 +65,8 @@ const renderModal = (specificCompany) => {
   const getArrayOfDates = (specificCompany) => {
     return specificCompany.reduce((total, current) => {
       const date = new Date(current.date);
-      const day = date.getDate() >= 10 ? date.getDate() : `0${date.getDate()}`;
-      const month = date.getMonth() >= 10 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`;
+      const day = date.getDate() < 10 ? `0${date.getDate()}` : `${date.getDate()}`;
+      const month = date.getMonth() < 10 ? `0${date.getMonth() + 1}` : `${date.getMonth() + 1}`;
       const year = date.getFullYear();
       total.push(`${year}.${month}.${day}`);
       return total;

@@ -92,12 +92,8 @@ const renderModal = (specificCompany) => {
       datasets: [{
         label: 'value of transaction',
         data: [...arrayOfValues],
-        backgroundColor: [
-          'rgba(245, 176, 66, 1)',
-        ],
-        borderColor: [
-          'rgba(112,112,112, 1)',
-        ],
+        backgroundColor: 'rgba(245, 176, 66, 1)',
+        borderColor: 'rgba(112,112,112, 1)',
         borderWidth: 1
       }]
     },

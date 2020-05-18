@@ -53,7 +53,7 @@ const renderModal = (specificCompany) => {
     </div>
     <div class="datePickers__dataDisplay">
       <p>total income between dates: <span class="totalBetweenDatesDisplay">0</span></p>
-      <p>average income between dates: <span class="averageBetweenDatesDisplay">0</span></p>
+      <p>average income per transaction between dates: <span class="averageBetweenDatesDisplay">0</span></p>
     </div>
     <canvas id="myChart" width=260" height="60"></canvas>
     <button class="modalClosingBtn">OK!</button>

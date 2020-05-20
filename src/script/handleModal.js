@@ -39,7 +39,7 @@ const renderModal = (specificCompany) => {
       <p class="basicData__totalIncome">total income: ${
     specificCompany.totalIncome
     }</p>
-      <p class="basicData__averageIncome">average income: ${
+      <p class="basicData__averageIncome">average income per transaction: ${
     specificCompany.totalIncome / specificCompany.incomes.length
     }</p>
       <p class="basicData__lastMonthTotal">Last month total income: ${lastMonthTotalIncome}</p>

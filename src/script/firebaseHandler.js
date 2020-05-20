@@ -2,8 +2,6 @@ import 'regenerator-runtime/runtime';
 import firebase from 'firebase/app';
 import 'firebase/app';
 import 'firebase/firestore';
-import dotenv from 'dotenv'
-dotenv.config();
 
 const app = firebase.initializeApp({
   apiKey: process.env.FIREBASE_APIKEY,

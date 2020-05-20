@@ -3,9 +3,9 @@ import 'chart.js';
 
 const wrapper = document.querySelector(".wrapper");
 
-const renderModal = (specificCompany) => {
-  wrapper.classList.add("notClickable");
 
+
+const renderModal = (specificCompany) => {
   const currentDate = new Date();
   const firstDay = new Date(
     currentDate.getFullYear(),
@@ -60,6 +60,10 @@ const renderModal = (specificCompany) => {
   </div>
   `;
 
+  wrapper.insertAdjacentHTML("afterend", modalTemplate);
+};
+
+const renderChart = (specificCompany) => {
   const sortedArrayOfIncomes = specificCompany.incomes.sort((a, b) => Date.parse(a.date) - Date.parse(b.date));
 
   const getArrayOfDates = (specificCompany) => {
@@ -77,7 +81,6 @@ const renderModal = (specificCompany) => {
   const arrayOfDates = getArrayOfDates(sortedArrayOfIncomes);
   const arrayOfValues = getArrayOfValues(sortedArrayOfIncomes);
 
-  wrapper.insertAdjacentHTML("afterend", modalTemplate);
   var ctx = document.getElementById('myChart').getContext('2d');
   var myChart = new Chart(ctx, {
     type: 'line',
@@ -101,8 +104,7 @@ const renderModal = (specificCompany) => {
       }
     }
   });
-
-};
+}
 
 const displayCustomDatesIncomes = (specificCompany) => {
   const dateFrom = document.querySelector(".datePickers__dateFrom");
@@ -150,6 +152,7 @@ const handleModalEvents = (specificCompany) => {
 
 export const handleCompanyClick = (e) => {
   let specificCompany;
+  wrapper.classList.add("notClickable");
 
   for (let company of checkArrayToRender()) {
     if (Number(e.target.parentNode.dataset.key) === company.id) {
@@ -158,5 +161,6 @@ export const handleCompanyClick = (e) => {
   }
 
   renderModal(specificCompany);
+  renderChart(specificCompany);
   handleModalEvents(specificCompany);
 };

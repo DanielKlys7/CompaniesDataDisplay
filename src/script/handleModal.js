@@ -63,22 +63,16 @@ const renderModal = (specificCompany) => {
   const sortedArrayOfIncomes = specificCompany.incomes.sort((a, b) => Date.parse(a.date) - Date.parse(b.date));
 
   const getArrayOfDates = (specificCompany) => {
-    return specificCompany.reduce((total, current) => {
-      const date = new Date(current.date);
+    return specificCompany.map(i => {
+      const date = new Date(i.date);
       const day = date.getDate() < 10 ? `0${date.getDate()}` : `${date.getDate()}`;
       const month = date.getMonth() < 9 ? `0${date.getMonth() + 1}` : `${date.getMonth() + 1}`;
       const year = date.getFullYear();
-      total.push(`${year}.${month}.${day}`);
-      return total;
-    }, [])
+      return `${year}.${month}.${day}`;
+    })
   };
 
-  const getArrayOfValues = (specificCompany) => {
-    return specificCompany.reduce((total, current) => {
-      total.push(current.value);
-      return total;
-    }, [])
-  };
+  const getArrayOfValues = (specificCompany) => specificCompany.map(i => i.value);
 
   const arrayOfDates = getArrayOfDates(sortedArrayOfIncomes);
   const arrayOfValues = getArrayOfValues(sortedArrayOfIncomes);
